@@ -3,31 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Observatoire Carburants</title>
+    <title>Observatoire National</title>
 </head>
 <body style="text-align:center; font-family:sans-serif; background:#002d5a; color:white; margin:0; padding:20px;">
 
-    <h1 style="font-size:22px;">⛽ OBSERVATOIRE NATIONAL</h1>
+    <h1>⛽ OBSERVATOIRE NATIONAL</h1>
     
     <div style="background:#ffcc00; color:black; padding:15px; margin:15px 0; font-weight:bold; border-radius:10px;">
         🚀 VOTRE PUBLICITÉ ICI
     </div>
 
-    <a href="https://www.prix-carburants.gouv.fr/" target="_blank" style="display:block; background:#e63946; color:white; padding:20px; margin:15px 0; text-decoration:none; font-weight:bold; border-radius:10px; font-size:18px;">
-        📍 VOIR LA CARTE DE FRANCE
-    </a>
+    <form action="https://www.prix-carburants.gouv.fr/recherche/" method="GET" target="_blank" style="margin-bottom:10px;">
+        <input type="hidden" name="departement" value="76">
+        <button type="submit" style="width:90%; background:#0056b3; color:white; padding:15px; border:none; border-radius:5px; font-weight:bold; font-size:16px; cursor:pointer;">
+            🔎 VOIR SEINE-MARITIME (76)
+        </button>
+    </form>
 
-    <div style="background:white; color:black; padding:15px; border-radius:10px; margin-top:20px;">
-        <p style="font-weight:bold; margin-top:0;">Recherche Directe :</p>
-        
-        <a href="https://www.prix-carburants.gouv.fr/recherche/?departement=76" target="_blank" style="display:inline-block; background:#0056b3; color:white; padding:12px; margin:5px; text-decoration:none; border-radius:5px; font-weight:bold;">
-            🔎 SEINE-MARITIME (76)
-        </a>
-
-        <a href="https://www.prix-carburants.gouv.fr/recherche/?departement=27" target="_blank" style="display:inline-block; background:#0056b3; color:white; padding:12px; margin:5px; text-decoration:none; border-radius:5px; font-weight:bold;">
-            🔎 EURE (27)
-        </a>
-    </div>
+    <form action="https://www.prix-carburants.gouv.fr/recherche/" method="GET" target="_blank">
+        <input type="hidden" name="departement" value="27">
+        <button type="submit" style="width:90%; background:#0056b3; color:white; padding:15px; border:none; border-radius:5px; font-weight:bold; font-size:16px; cursor:pointer;">
+            🔎 VOIR EURE (27)
+        </button>
+    </form>
 
     <div style="background:#ffcc00; color:black; padding:15px; margin:20px 0; font-weight:bold; border-radius:10px;">
         🚀 VOTRE PUBLICITÉ ICI
@@ -36,5 +34,5 @@
     <p style="font-size:11px; opacity:0.8;">🔒 Zéro collecte de données - 2026</p>
 
 </body>
-<
-    /html>
+</
+    html>
