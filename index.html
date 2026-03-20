@@ -5,28 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Observatoire National des Carburants</title>
     <style>
-        body { font-family: sans-serif; margin: 0; background: #f4f7f6; }
-        header { background: #002d5a; color: white; padding: 15px; text-align: center; }
-        .pub { background: #fff; border: 2px dashed #bbb; margin: 10px; padding: 25px; text-align: center; font-weight: bold; color: #999; }
-        .nav { background: #eee; padding: 10px; text-align: center; border-bottom: 2px solid #ddd; }
-        .nav a { display: inline-block; margin: 5px; padding: 10px; background: #0056b3; color: white; text-decoration: none; border-radius: 4px; font-size: 14px; }
-        .map-container { position: relative; width: 100%; height: 65vh; background: #fff; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        body { font-family: sans-serif; margin: 0; background: #002d5a; overflow: hidden; }
+        .header { background: #002d5a; color: white; padding: 10px; text-align: center; }
+        .pub-box { background: #ffcc00; color: #000; padding: 8px; text-align: center; font-weight: bold; }
+        .map-wrapper { width: 100%; height: calc(100vh - 110px); background: #fff; }
         iframe { width: 100%; height: 100%; border: none; }
-        footer { padding: 10px; text-align: center; font-size: 12px; background: #e7f3ff; margin-top: 15px; }
     </style>
 </head>
 <body>
-    <header><h1>⛽ Observatoire National des Carburants</h1></header>
-    <div class="nav">
-        <strong>Départements :</strong>
-        <a href="https://www.prix-carburants.gouv.fr/recherche/?departement=76">76 - Seine-Maritime</a>
-        <a href="https://www.prix-carburants.gouv.fr/recherche/?departement=27">27 - Eure</a>
-    </div>
-    <div class="pub">🚀 VOTRE PUBLICITÉ ICI</div>
-    <div class="map-container">
+    <div class="header">⛽ OBSERVATOIRE NATIONAL</div>
+    <div class="pub-box">🚀 VOTRE PUBLICITÉ ICI</div>
+    <div class="map-wrapper">
         <iframe src="https://www.prix-carburants.gouv.fr/iframe/map/"></iframe>
     </div>
-    <div class="pub">🚀 VOTRE PUBLICITÉ ICI</div>
-    <footer>🔒 Zéro collecte de données - Respect international - 2026</footer>
 </body>
 </html>
