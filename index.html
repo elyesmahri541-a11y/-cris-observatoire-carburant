@@ -108,31 +108,26 @@
             const list = document.getElementById('api-list');
             const info = document.getElementById('station-info');
             
-            list.innerHTML = "<p style='text-align:center'>⚡ Scan du flux national...</p>";
+            list.innerHTML = "<p style='text-align:center'>⚡ Connexion sécurisée...</p>";
             card.style.display = "block";
 
-            // STRATÉGIE INFAILLIBLE : On récupère 100 stations sans aucun filtre pour ne pas fâcher l'API
-            // Puis on trie manuellement dans le code JS.
-            const url = `https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/prix_des_carburants_en_france_reel/records?order_by=maj%20desc&limit=100`;
+            // NOUVELLE URL ANTI-BLOCAGE : On utilise le moteur V2.1 d'OpenDataSoft
+            const url = `https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/prix_des_carburants_en_france_reel/records?where=cp%20like%20%22${dept}*%22&limit=50&order_by=gazole_prix%20asc`;
 
             try {
                 const response = await fetch(url);
+                if (!response.ok) throw new Error();
                 const data = await response.json();
                 
-                // On filtre les stations qui commencent par ton département (76)
-                const stationsFiltrees = data.results.filter(s => s.cp && s.cp.startsWith(dept));
-
-                if(stationsFiltrees.length === 0) {
-                    list.innerHTML = `<p style='text-align:center'>❌ Trop de monde sur le serveur national. Réessayez dans 5 secondes.</p>`;
+                if(!data.results || data.results.length === 0) {
+                    list.innerHTML = `<p style='text-align:center'>❌ Aucune station trouvée pour le ${dept}.</p>`;
                     return;
                 }
 
-                const stationsTriees = stationsFiltrees.sort((a, b) => (a.gazole_prix || 9) - (b.gazole_prix || 9));
-
                 list.innerHTML = "";
-                info.innerText = `📍 ${stationsTriees.length} STATIONS TROUVÉES (${dept})`;
+                info.innerText = `📍 ${data.results.length} STATIONS DANS LE ${dept}`;
                 
-                stationsTriees.forEach(s => {
+                data.results.forEach(s => {
                     list.innerHTML += `
                         <div class="live-item">
                             <div style="text-align:left;">
@@ -148,7 +143,7 @@
                         </div>`;
                 });
             } catch(e) { 
-                list.innerHTML = "<p style='text-align:center'>⚠️ Erreur réseau. Veuillez rafraîchir la page.</p>"; 
+                list.innerHTML = "<p style='text-align:center'>⚠️ Le flux est saturé. Réessayez dans 10 secondes.</p>"; 
             }
         }
 
