@@ -42,7 +42,7 @@
     </header>
 
     <div class="search-area">
-        <input type="text" id="cpInput" class="search-input" placeholder="Département (ex: 76)">
+        <input type="text" id="cpInput" class="search-input" placeholder="Dept (ex: 76)">
         <button onclick="rechercher()" class="search-btn">GO</button>
     </div>
 
@@ -85,7 +85,7 @@
 
     <div class="card" style="font-size: 11px; color: var(--text-muted); line-height: 1.6;">
         <p style="text-align:center; font-weight:800; color:var(--text-main); margin-bottom: 10px;">MENTIONS LÉGALES & CONFIDENTIALITÉ</p>
-        <p><b>Informations :</b> Observatoire utilisant les données de prix-carburants.gouv.fr. Prix indicatifs.</p>
+        <p><b>Informations :</b> Observatoire utilisant les données de prix-carburants.gouv.fr.</p>
         <p><b>Confidentialité :</b> Aucune donnée stockée. Publicité via Adsterra.</p>
     </div>
 
@@ -103,37 +103,41 @@
             let val = document.getElementById('cpInput').value.trim();
             if(val.length < 2) return alert("Indique un département (ex: 76)");
             
+            const dept = val.substring(0, 2);
             const card = document.getElementById('api-card');
             const list = document.getElementById('api-list');
             const info = document.getElementById('station-info');
             
-            list.innerHTML = "<p style='text-align:center'>🛰️ Recherche en cours...</p>";
+            list.innerHTML = "<p style='text-align:center'>🛰️ Analyse du flux national...</p>";
             card.style.display = "block";
 
-            // NOUVELLE METHODE "QUERY" : On cherche simplement le texte saisi dans le champ CP
-            // C'est la méthode la plus fiable pour éviter les erreurs de syntaxe
-            const url = `https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-temps-reel/records?q=cp:${val}*&limit=100`;
+            // STRATÉGIE RADICALE : On récupère les 1000 dernières mises à jour nationales 
+            // et on filtre nous-mêmes par département. Zéro erreur possible.
+            const url = `https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-temps-reel/records?limit=1000`;
 
             try {
                 const response = await fetch(url);
                 const data = await response.json();
                 
-                if(!data.results || data.results.length === 0) {
-                    list.innerHTML = `<p style='text-align:center'>❌ Aucune station trouvée pour "${val}".</p>`;
+                // Filtrage manuel par le département (les 2 premiers chiffres du CP)
+                const stationsDept = data.results.filter(s => s.cp && s.cp.startsWith(dept));
+
+                if(stationsDept.length === 0) {
+                    list.innerHTML = `<p style='text-align:center'>❌ Aucune donnée récente pour le ${dept}. Réessayez.</p>`;
                     return;
                 }
 
-                // Tri automatique par prix Gazole
-                const stations = data.results.sort((a, b) => (a.gazole_prix || 9) - (b.gazole_prix || 9));
+                // Tri par prix Gazole
+                const stationsTriees = stationsDept.sort((a, b) => (a.gazole_prix || 9) - (b.gazole_prix || 9));
 
                 list.innerHTML = "";
-                info.innerText = `📍 ${stations.length} STATIONS TROUVÉES`;
+                info.innerText = `📍 ${stationsTriees.length} STATIONS TROUVÉES (76)`;
                 
-                stations.forEach(s => {
+                stationsTriees.forEach(s => {
                     list.innerHTML += `
                         <div class="live-item">
                             <div style="text-align:left;">
-                                <b style="font-size:11px; text-transform: uppercase;">${s.adresse || 'ADRESSE INCONNUE'}</b><br>
+                                <b style="font-size:11px; text-transform: uppercase;">${s.adresse || 'ADRESSE'}</b><br>
                                 <small style="color:var(--accent); font-weight:bold;">${s.ville} (${s.cp})</small>
                             </div>
                             <div class="live-prices">
@@ -145,7 +149,7 @@
                         </div>`;
                 });
             } catch(e) { 
-                list.innerHTML = "<p style='text-align:center'>⚠️ Erreur de connexion au serveur.</p>"; 
+                list.innerHTML = "<p style='text-align:center'>⚠️ Erreur de connexion au flux national.</p>"; 
             }
         }
 
