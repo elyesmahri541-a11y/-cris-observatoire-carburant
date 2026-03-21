@@ -42,7 +42,7 @@
     </header>
 
     <div class="search-area">
-        <input type="text" id="cpInput" class="search-input" placeholder="Dept ou CP (ex: 76)">
+        <input type="text" id="cpInput" class="search-input" placeholder="Département (ex: 76)">
         <button onclick="rechercher()" class="search-btn">GO</button>
     </div>
 
@@ -66,7 +66,7 @@
         <h2 style="font-size: 18px; margin-bottom: 10px;">⚔️ Duel de Stations</h2>
         <input type="number" id="p1" step="0.001" placeholder="Prix Station A" class="duel-input">
         <input type="number" id="p2" step="0.001" placeholder="Prix Station B" class="duel-input">
-        <button onclick="duel()" class="btn-main" style="background:var(--secondary); color:#000;">COMPARER L'ÉCONOMIE</button>
+        <button onclick="duel()" class="btn-main" style="background:var(--secondary); color:#000;">COMPARER</button>
         <div id="resDuel" style="display:none; margin-top:15px; font-weight:800; text-align:center;">
             Économie : <span id="valDuel" style="color:var(--secondary);">0</span> € sur 50L
         </div>
@@ -85,8 +85,8 @@
 
     <div class="card" style="font-size: 11px; color: var(--text-muted); line-height: 1.6;">
         <p style="text-align:center; font-weight:800; color:var(--text-main); margin-bottom: 10px;">MENTIONS LÉGALES & CONFIDENTIALITÉ</p>
-        <p><b>Informations :</b> Observatoire bénévole utilisant les données officielles de prix-carburants.gouv.fr. Prix indicatifs.</p>
-        <p><b>Confidentialité :</b> Aucune donnée personnelle n'est stockée. Publicité via Adsterra.</p>
+        <p><b>Informations :</b> Observatoire utilisant les données de prix-carburants.gouv.fr. Prix indicatifs.</p>
+        <p><b>Confidentialité :</b> Aucune donnée stockée. Publicité via Adsterra.</p>
     </div>
 
     <footer style="padding: 30px; font-size: 11px; color: #64748b;">© 2026 Observatoire National - Elyes Mahri</footer>
@@ -101,7 +101,7 @@
 
         async function rechercher() {
             let val = document.getElementById('cpInput').value.trim();
-            if(val.length < 2) return alert("Indique au moins 2 chiffres (ex: 76)");
+            if(val.length < 2) return alert("Indique un département (ex: 76)");
             
             const card = document.getElementById('api-card');
             const list = document.getElementById('api-list');
@@ -110,24 +110,24 @@
             list.innerHTML = "<p style='text-align:center'>🛰️ Recherche en cours...</p>";
             card.style.display = "block";
 
-            // CODE CORRIGÉ : Extraction du département si CP complet
-            const dept = val.substring(0, 2);
-            // On utilise une requête simple et efficace qui marche sur TOUS les départements
-            const url = `https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-temps-reel/records?where=cp%20like%20%22${dept}*%22&limit=100`;
+            // NOUVELLE METHODE "QUERY" : On cherche simplement le texte saisi dans le champ CP
+            // C'est la méthode la plus fiable pour éviter les erreurs de syntaxe
+            const url = `https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-temps-reel/records?q=cp:${val}*&limit=100`;
 
             try {
                 const response = await fetch(url);
                 const data = await response.json();
                 
                 if(!data.results || data.results.length === 0) {
-                    list.innerHTML = `<p style='text-align:center'>❌ Aucune station trouvée pour le ${dept}.</p>`;
+                    list.innerHTML = `<p style='text-align:center'>❌ Aucune station trouvée pour "${val}".</p>`;
                     return;
                 }
 
-                // Tri par prix Gazole croissant
+                // Tri automatique par prix Gazole
                 const stations = data.results.sort((a, b) => (a.gazole_prix || 9) - (b.gazole_prix || 9));
+
                 list.innerHTML = "";
-                info.innerText = `📍 ${stations.length} STATIONS DANS LE ${dept}`;
+                info.innerText = `📍 ${stations.length} STATIONS TROUVÉES`;
                 
                 stations.forEach(s => {
                     list.innerHTML += `
@@ -145,7 +145,7 @@
                         </div>`;
                 });
             } catch(e) { 
-                list.innerHTML = "<p style='text-align:center'>⚠️ Flux gouvernemental saturé.</p>"; 
+                list.innerHTML = "<p style='text-align:center'>⚠️ Erreur de connexion au serveur.</p>"; 
             }
         }
 
