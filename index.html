@@ -31,31 +31,31 @@
             }
         }
 
-        body { text-align: center; font-family: 'Inter', system-ui, -apple-system, sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 0; line-height: 1.5; }
+        body { text-align: center; font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 0; line-height: 1.5; }
 
-        .header { background: var(--primary); padding: 35px 20px; border-bottom-left-radius: 32px; border-bottom-right-radius: 32px; box-shadow: var(--shadow); }
-        .header h1 { margin: 0; font-size: 20px; font-weight: 800; color: white; letter-spacing: -0.5px; }
+        .header { background: var(--primary); padding: 35px 20px 50px; border-bottom-left-radius: 32px; border-bottom-right-radius: 32px; box-shadow: var(--shadow); }
+        .header h1 { margin: 0; font-size: 20px; font-weight: 800; color: white; }
         
         .date-badge { background: var(--secondary); color: #000; display: inline-block; padding: 6px 14px; border-radius: 50px; font-weight: 700; font-size: 11px; margin-top: 12px; }
 
-        .search-area { margin: -20px auto 20px; width: 90%; max-width: 500px; display: flex; gap: 8px; position: relative; z-index: 10; }
-        .search-input { flex: 1; padding: 15px; border-radius: 18px; border: 1px solid var(--border); box-shadow: var(--shadow); font-size: 14px; outline: none; background: var(--bg-card); color: var(--text-main); }
+        .search-area { margin: -25px auto 20px; width: 90%; max-width: 500px; display: flex; gap: 8px; position: relative; z-index: 10; }
+        .search-input { flex: 1; padding: 15px; border-radius: 18px; border: 1px solid var(--border); box-shadow: var(--shadow); background: var(--bg-card); color: var(--text-main); }
         .search-btn { background: var(--accent); color: white; border: none; padding: 0 20px; border-radius: 18px; font-weight: 800; cursor: pointer; }
 
         .card { background-color: var(--bg-card); margin: 20px auto; padding: 24px; border-radius: 28px; box-shadow: var(--shadow); max-width: 500px; width: 88%; text-align: left; border: 1px solid var(--border); }
 
         .moyennes-table { width: 100%; border-collapse: collapse; }
-        .moyennes-table td { padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+        .moyennes-table td { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
 
         .top-list { list-style: none; padding: 0; margin: 0; }
-        .top-list li { display: flex; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--border); font-size: 13px; gap: 8px; flex-wrap: wrap; }
+        .top-list li { display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 13px; gap: 8px; flex-wrap: wrap; }
 
         .btn-maps { text-decoration: none; font-weight: 700; color: var(--accent) !important; background: rgba(59, 130, 246, 0.1); padding: 6px 12px; border-radius: 10px; font-size: 11px; margin-left: auto; }
 
         .badge { display: inline-block; padding: 4px 8px; border-radius: 8px; font-size: 10px; font-weight: 800; color: white; min-width: 70px; text-align: center; }
         .b-fresh { background: #10b981; } .b-ok { background: #64748b; } .b-old { background: #f59e0b; }
 
-        .btn-main { display: block; width: 100%; padding: 15px; background: var(--accent); color: white; text-decoration: none; border-radius: 18px; font-size: 13px; font-weight: 700; border: none; cursor: pointer; margin-top: 15px; }
+        .btn-main { display: block; width: 100%; padding: 15px; background: var(--accent); color: white; text-decoration: none; border-radius: 18px; font-size: 13px; font-weight: 700; text-align: center; margin-top: 15px; border:none; cursor:pointer; }
 
         .duel-card { background: linear-gradient(135deg, #d90429 0%, #800000 100%); color: white; }
         .duel-input { width: 92%; padding: 14px; margin: 8px 0; border-radius: 14px; border: none; background: rgba(255,255,255,0.15); color: white; }
@@ -65,14 +65,14 @@
 
         .live-item { padding: 15px 0; border-bottom: 1px dashed var(--border); }
         .live-prices { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 8px; }
-        .price-chip { font-size: 11px; background: rgba(59, 130, 246, 0.05); padding: 4px; border-radius: 6px; }
+        .price-chip { font-size: 11px; background: rgba(59, 130, 246, 0.08); padding: 5px; border-radius: 8px; }
     </style>
 </head>
 <body>
 
     <header class="header">
         <h1>⛽ ESSENCE ECO NORMANDIE</h1>
-        <div class="date-badge" id="clock">✅ Mis à jour le 21 Mars 2026</div>
+        <div class="date-badge" id="clock">Chargement...</div>
     </header>
 
     <div class="search-area">
@@ -81,7 +81,7 @@
     </div>
 
     <div id="api-card" class="card" style="display:none; border-top: 6px solid var(--accent);">
-        <h3 style="margin-top:0; color:var(--accent); text-align:center;">📍 Prix en Direct (API)</h3>
+        <h3 style="margin-top:0; color:var(--accent); text-align:center;">📍 Prix en Direct</h3>
         <div id="api-list"></div>
     </div>
 
@@ -89,7 +89,8 @@
         <h2 style="font-size: 16px; color: var(--accent); margin-top:0;">📊 Moyennes France</h2>
         <table class="moyennes-table">
             <tr><td><b>Gazole</b></td><td style="text-align: right; font-weight: 800; color: #ef4444;">2,132 € ⬆</td></tr>
-            <tr><td><b>SP95 (E10)</b></td><td style="text-align: right; font-weight: 800;">1,964 € ⬆</td></tr>
+            <tr><td><b>SP95 (E5)</b></td><td style="text-align: right; font-weight: 800;">1,983 € ⬆</td></tr>
+            <tr><td><b>SP95-E10</b></td><td style="text-align: right; font-weight: 800;">1,964 € ⬆</td></tr>
             <tr><td><b>SP98</b></td><td style="text-align: right; font-weight: 800;">2,038 € ⬆</td></tr>
             <tr><td><b>E85</b></td><td style="text-align: right; font-weight: 800; color: #10b981;">0,808 € ⬇</td></tr>
         </table>
@@ -100,6 +101,7 @@
         <ul class="top-list">
             <li><span class="badge b-old">07/03</span> <b>Gazole :</b> 1,967€ <a href="#" class="btn-maps">📍 Canteleu</a></li>
             <li><span class="badge b-old">07/03</span> <b>SP95-E10 :</b> 1,811€ <a href="#" class="btn-maps">📍 Canteleu</a></li>
+            <li><span class="badge b-ok">17/03</span> <b>SP95-E5 :</b> 1,869€ <a href="#" class="btn-maps">📍 Fécamp</a></li>
             <li><span class="badge b-fresh">21/03</span> <b>SP98 :</b> 1,836€ <a href="#" class="btn-maps">📍 Gonfreville</a></li>
             <li><span class="badge b-fresh">21/03</span> <b>E85 :</b> 0,677€ <a href="#" class="btn-maps">📍 Gonfreville</a></li>
         </ul>
@@ -110,6 +112,7 @@
         <ul class="top-list">
             <li><span class="badge b-old">12/03</span> <b>Gazole :</b> 1,986€ <a href="#" class="btn-maps">📍 Charleval</a></li>
             <li><span class="badge b-old">12/03</span> <b>SP95-E10 :</b> 1,819€ <a href="#" class="btn-maps">📍 Charleval</a></li>
+            <li><span class="badge b-fresh">21/03</span> <b>SP95-E5 :</b> 1,915€ <a href="#" class="btn-maps">📍 Pacy</a></li>
             <li><span class="badge b-ok">16/03</span> <b>SP98 :</b> 1,890€ <a href="#" class="btn-maps">📍 Thiberville</a></li>
             <li><span class="badge b-fresh">21/03</span> <b>E85 :</b> 0,691€ <a href="#" class="btn-maps">📍 Menneval</a></li>
         </ul>
@@ -120,7 +123,7 @@
         <input type="number" id="p1" step="0.001" placeholder="Prix Station A" class="duel-input">
         <input type="number" id="p2" step="0.001" placeholder="Prix Station B" class="duel-input">
         <button onclick="duel()" class="btn-main" style="background:var(--secondary); color:#000;">CALCULER L'ÉCART</button>
-        <div id="resDuel" style="display:none; margin-top:15px; font-weight:800; font-size: 15px;">
+        <div id="resDuel" style="display:none; margin-top:15px; font-weight:800;">
             Économie : <span id="valDuel" style="color:var(--secondary);">0</span> € sur 50L
         </div>
     </div>
@@ -134,6 +137,12 @@
     <div style="margin:20px auto; width:90%; max-width:400px;">
         <script async="async" data-cfasync="false" src="https://pl28952288.profitablecpmratenetwork.com/37a7d91a3f21fde8a322a7a48c93a877/invoke.js"></script>
         <div id="container-37a7d91a3f21fde8a322a7a48c93a877"></div>
+    </div>
+
+    <div class="card" style="font-size: 11px; color: var(--text-muted); line-height: 1.6;">
+        <p style="text-align:center; font-weight:800; color:var(--text-main); margin-bottom: 10px;">MENTIONS LÉGALES & CONFIDENTIALITÉ</p>
+        <p><b>CGU :</b> Cet observatoire est un outil d'information bénévole. Les prix sont indicatifs et issus des flux officiels (Gouv.fr). Nous ne sommes pas responsables des erreurs de prix en station.</p>
+        <p><b>Privacy Policy (RGPD) :</b> Nous ne collectons aucune donnée personnelle directement. Des cookies publicitaires (Adsterra) peuvent être utilisés pour l'affichage des bannières.</p>
     </div>
 
     <footer style="padding: 30px; font-size: 11px; color: #64748b;">© 2026 Observatoire Normand - Elyes Mahri</footer>
@@ -150,7 +159,6 @@
         async function rechercher() {
             const cp = document.getElementById('cpInput').value;
             if(!cp) return alert("Indique un code postal !");
-            
             const card = document.getElementById('api-card');
             const list = document.getElementById('api-list');
             list.innerHTML = "Recherche en cours...";
@@ -166,10 +174,10 @@
                         <div class="live-item">
                             <div style="text-align:left;"><b style="font-size:12px; text-transform: uppercase;">${s.adresse}</b></div>
                             <div class="live-prices">
-                                <span class="price-chip">Gazole: <b>${s.gazole_prix || '--'}</b></span>
-                                <span class="price-chip">E10: <b>${s.sp95_prix || '--'}</b></span>
-                                <span class="price-chip">SP98: <b>${s.sp98_prix || '--'}</b></span>
-                                <span class="price-chip">E85: <b>${s.e85_prix || '--'}</b></span>
+                                <span class="price-chip">Gazole: <b>${s.gazole_prix || '--'}€</b></span>
+                                <span class="price-chip">E10: <b>${s.sp95_prix || '--'}€</b></span>
+                                <span class="price-chip">SP98: <b>${s.sp98_prix || '--'}€</b></span>
+                                <span class="price-chip">E85: <b>${s.e85_prix || '--'}€</b></span>
                             </div>
                         </div>`;
                 });
@@ -187,7 +195,7 @@
         }
 
         function copyLink() { navigator.clipboard.writeText(SITE_URL); alert('Lien copié !'); }
-        function shareWA() { window.open("https://api.whatsapp.com/send?text=Essence pas chère ici : " + SITE_URL); }
+        function shareWA() { window.open("https://api.whatsapp.com/send?text=Prix carburants Normandie : " + SITE_URL); }
         function shareFB() { window.open("https://www.facebook.com/sharer/sharer.php?u=" + SITE_URL); }
     </script>
 </body>
