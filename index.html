@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Essence Eco Normandie | Observatoire Live</title>
+    <title>Essence Eco | Observatoire National Live</title>
     <script src="https://pl28952276.profitablecpmratenetwork.com/68/19/1f/68191f7887eac7841580d0ccead48e50.js"></script>
     <style>
         :root {
@@ -34,12 +34,12 @@
         body { text-align: center; font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 0; line-height: 1.5; }
 
         .header { background: var(--primary); padding: 35px 20px 50px; border-bottom-left-radius: 32px; border-bottom-right-radius: 32px; box-shadow: var(--shadow); }
-        .header h1 { margin: 0; font-size: 20px; font-weight: 800; color: white; }
+        .header h1 { margin: 0; font-size: 20px; font-weight: 800; color: white; letter-spacing: -0.5px; }
         
         .date-badge { background: var(--secondary); color: #000; display: inline-block; padding: 6px 14px; border-radius: 50px; font-weight: 700; font-size: 11px; margin-top: 12px; }
 
         .search-area { margin: -25px auto 20px; width: 90%; max-width: 500px; display: flex; gap: 8px; position: relative; z-index: 10; }
-        .search-input { flex: 1; padding: 15px; border-radius: 18px; border: 1px solid var(--border); box-shadow: var(--shadow); background: var(--bg-card); color: var(--text-main); }
+        .search-input { flex: 1; padding: 15px; border-radius: 18px; border: 1px solid var(--border); box-shadow: var(--shadow); background: var(--bg-card); color: var(--text-main); outline: none; }
         .search-btn { background: var(--accent); color: white; border: none; padding: 0 20px; border-radius: 18px; font-weight: 800; cursor: pointer; }
 
         .card { background-color: var(--bg-card); margin: 20px auto; padding: 24px; border-radius: 28px; box-shadow: var(--shadow); max-width: 500px; width: 88%; text-align: left; border: 1px solid var(--border); }
@@ -47,18 +47,10 @@
         .moyennes-table { width: 100%; border-collapse: collapse; }
         .moyennes-table td { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
 
-        .top-list { list-style: none; padding: 0; margin: 0; }
-        .top-list li { display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 13px; gap: 8px; flex-wrap: wrap; }
-
-        .btn-maps { text-decoration: none; font-weight: 700; color: var(--accent) !important; background: rgba(59, 130, 246, 0.1); padding: 6px 12px; border-radius: 10px; font-size: 11px; margin-left: auto; }
-
-        .badge { display: inline-block; padding: 4px 8px; border-radius: 8px; font-size: 10px; font-weight: 800; color: white; min-width: 70px; text-align: center; }
-        .b-fresh { background: #10b981; } .b-ok { background: #64748b; } .b-old { background: #f59e0b; }
-
         .btn-main { display: block; width: 100%; padding: 15px; background: var(--accent); color: white; text-decoration: none; border-radius: 18px; font-size: 13px; font-weight: 700; text-align: center; margin-top: 15px; border:none; cursor:pointer; }
 
         .duel-card { background: linear-gradient(135deg, #d90429 0%, #800000 100%); color: white; }
-        .duel-input { width: 92%; padding: 14px; margin: 8px 0; border-radius: 14px; border: none; background: rgba(255,255,255,0.15); color: white; }
+        .duel-input { width: 92%; padding: 14px; margin: 8px 0; border-radius: 14px; border: none; background: rgba(255,255,255,0.15); color: white; outline: none; }
 
         .social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 500px; margin: 20px auto; width: 90%; }
         .btn-social { padding: 14px; border-radius: 16px; text-decoration: none; font-size: 12px; font-weight: 700; color: white; text-align: center; border: none; cursor: pointer; }
@@ -71,22 +63,22 @@
 <body>
 
     <header class="header">
-        <h1>⛽ ESSENCE ECO NORMANDIE</h1>
+        <h1>⛽ ESSENCE ECO | LIVE</h1>
         <div class="date-badge" id="clock">Chargement...</div>
     </header>
 
     <div class="search-area">
-        <input type="number" id="cpInput" class="search-input" placeholder="Code postal (ex: 76000)">
+        <input type="number" id="cpInput" class="search-input" placeholder="Ton Code Postal (ex: 75001)">
         <button onclick="rechercher()" class="search-btn">GO</button>
     </div>
 
     <div id="api-card" class="card" style="display:none; border-top: 6px solid var(--accent);">
-        <h3 style="margin-top:0; color:var(--accent); text-align:center;">📍 Prix en Direct</h3>
+        <h3 style="margin-top:0; color:var(--accent); text-align:center;">📍 Prix à proximité</h3>
         <div id="api-list"></div>
     </div>
 
     <div class="card">
-        <h2 style="font-size: 16px; color: var(--accent); margin-top:0;">📊 Moyennes France</h2>
+        <h2 style="font-size: 16px; color: var(--accent); margin-top:0;">📊 Moyennes Nationales</h2>
         <table class="moyennes-table">
             <tr><td><b>Gazole</b></td><td style="text-align: right; font-weight: 800; color: #ef4444;">2,132 € ⬆</td></tr>
             <tr><td><b>SP95 (E5)</b></td><td style="text-align: right; font-weight: 800;">1,983 € ⬆</td></tr>
@@ -96,35 +88,14 @@
         </table>
     </div>
 
-    <div class="card" style="border-top: 6px solid #3b82f6;">
-        <h3 style="margin-top: 0; color: #3b82f6; text-align: center;">🏆 Seine-Maritime (76)</h3>
-        <ul class="top-list">
-            <li><span class="badge b-old">07/03</span> <b>Gazole :</b> 1,967€ <a href="#" class="btn-maps">📍 Canteleu</a></li>
-            <li><span class="badge b-old">07/03</span> <b>SP95-E10 :</b> 1,811€ <a href="#" class="btn-maps">📍 Canteleu</a></li>
-            <li><span class="badge b-ok">17/03</span> <b>SP95-E5 :</b> 1,869€ <a href="#" class="btn-maps">📍 Fécamp</a></li>
-            <li><span class="badge b-fresh">21/03</span> <b>SP98 :</b> 1,836€ <a href="#" class="btn-maps">📍 Gonfreville</a></li>
-            <li><span class="badge b-fresh">21/03</span> <b>E85 :</b> 0,677€ <a href="#" class="btn-maps">📍 Gonfreville</a></li>
-        </ul>
-    </div>
-
-    <div class="card" style="border-top: 6px solid #10b981;">
-        <h3 style="margin-top: 0; color: #10b981; text-align: center;">🏆 Eure (27)</h3>
-        <ul class="top-list">
-            <li><span class="badge b-old">12/03</span> <b>Gazole :</b> 1,986€ <a href="#" class="btn-maps">📍 Charleval</a></li>
-            <li><span class="badge b-old">12/03</span> <b>SP95-E10 :</b> 1,819€ <a href="#" class="btn-maps">📍 Charleval</a></li>
-            <li><span class="badge b-fresh">21/03</span> <b>SP95-E5 :</b> 1,915€ <a href="#" class="btn-maps">📍 Pacy</a></li>
-            <li><span class="badge b-ok">16/03</span> <b>SP98 :</b> 1,890€ <a href="#" class="btn-maps">📍 Thiberville</a></li>
-            <li><span class="badge b-fresh">21/03</span> <b>E85 :</b> 0,691€ <a href="#" class="btn-maps">📍 Menneval</a></li>
-        </ul>
-    </div>
-
     <div class="card duel-card">
         <h2 style="font-size: 18px; margin-bottom: 10px;">⚔️ Duel de Stations</h2>
+        <p style="font-size: 11px; opacity: 0.8; margin-bottom: 10px;">Compare deux prix pour voir l'économie sur 50L</p>
         <input type="number" id="p1" step="0.001" placeholder="Prix Station A" class="duel-input">
         <input type="number" id="p2" step="0.001" placeholder="Prix Station B" class="duel-input">
         <button onclick="duel()" class="btn-main" style="background:var(--secondary); color:#000;">CALCULER L'ÉCART</button>
         <div id="resDuel" style="display:none; margin-top:15px; font-weight:800;">
-            Économie : <span id="valDuel" style="color:var(--secondary);">0</span> € sur 50L
+            Économie : <span id="valDuel" style="color:var(--secondary);">0</span> €
         </div>
     </div>
 
@@ -141,11 +112,11 @@
 
     <div class="card" style="font-size: 11px; color: var(--text-muted); line-height: 1.6;">
         <p style="text-align:center; font-weight:800; color:var(--text-main); margin-bottom: 10px;">MENTIONS LÉGALES & CONFIDENTIALITÉ</p>
-        <p><b>CGU :</b> Cet observatoire est un outil d'information bénévole. Les prix sont indicatifs et issus des flux officiels (Gouv.fr). Nous ne sommes pas responsables des erreurs de prix en station.</p>
-        <p><b>Privacy Policy (RGPD) :</b> Nous ne collectons aucune donnée personnelle directement. Des cookies publicitaires (Adsterra) peuvent être utilisés pour l'affichage des bannières.</p>
+        <p><b>Information :</b> Observatoire bénévole utilisant les données officielles de prix-carburants.gouv.fr. Les prix sont fournis à titre indicatif.</p>
+        <p><b>Confidentialité :</b> Nous ne stockons aucune donnée. L'affichage publicitaire est géré par Adsterra via cookies tiers.</p>
     </div>
 
-    <footer style="padding: 30px; font-size: 11px; color: #64748b;">© 2026 Observatoire Normand - Elyes Mahri</footer>
+    <footer style="padding: 30px; font-size: 11px; color: #64748b;">© 2026 Observatoire National - Elyes Mahri</footer>
 
     <script>
         const SITE_URL = "https://cris-observatory.github.io/-cris-observatoire-carburant/";
@@ -158,17 +129,17 @@
 
         async function rechercher() {
             const cp = document.getElementById('cpInput').value;
-            if(!cp) return alert("Indique un code postal !");
+            if(!cp) return alert("Indique ton code postal !");
             const card = document.getElementById('api-card');
             const list = document.getElementById('api-list');
-            list.innerHTML = "Recherche en cours...";
+            list.innerHTML = "<p style='text-align:center'>🛰️ Recherche des prix...</p>";
             card.style.display = "block";
 
             try {
-                const res = await fetch(`https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-temps-reel/records?limit=5&where=cp%3D'${cp}'`);
+                const res = await fetch(`https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-temps-reel/records?limit=8&where=cp%3D'${cp}'`);
                 const data = await res.json();
                 list.innerHTML = "";
-                if(data.results.length === 0) list.innerHTML = "Aucune station trouvée.";
+                if(data.results.length === 0) list.innerHTML = "<p style='text-align:center'>❌ Aucune station trouvée.</p>";
                 data.results.forEach(s => {
                     list.innerHTML += `
                         <div class="live-item">
@@ -181,7 +152,7 @@
                             </div>
                         </div>`;
                 });
-            } catch(e) { list.innerHTML = "⚠️ Service gouv. en maintenance."; }
+            } catch(e) { list.innerHTML = "⚠️ Erreur de connexion au flux national."; }
         }
 
         function duel() {
@@ -195,7 +166,7 @@
         }
 
         function copyLink() { navigator.clipboard.writeText(SITE_URL); alert('Lien copié !'); }
-        function shareWA() { window.open("https://api.whatsapp.com/send?text=Prix carburants Normandie : " + SITE_URL); }
+        function shareWA() { window.open("https://api.whatsapp.com/send?text=Trouve l'essence moins chère ici : " + SITE_URL); }
         function shareFB() { window.open("https://www.facebook.com/sharer/sharer.php?u=" + SITE_URL); }
     </script>
 </body>
