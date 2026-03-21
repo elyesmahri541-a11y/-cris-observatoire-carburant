@@ -42,7 +42,7 @@
     </header>
 
     <div class="search-area">
-        <input type="text" id="cpInput" class="search-input" placeholder="Dept (ex: 76)">
+        <input type="text" id="cpInput" class="search-input" placeholder="Département (ex: 76)">
         <button onclick="rechercher()" class="search-btn">GO</button>
     </div>
 
@@ -108,25 +108,28 @@
             const list = document.getElementById('api-list');
             const info = document.getElementById('station-info');
             
-            list.innerHTML = "<p style='text-align:center'>🛠️ Force du flux direct...</p>";
+            list.innerHTML = "<p style='text-align:center'>⚡ Scan du flux national (100% légal)...</p>";
             card.style.display = "block";
 
-            // STRATÉGIE DE LA DERNIÈRE CHANCE : Recherche texte brut sur le domaine de secours
-            const url = `https://data.economie.gouv.fr/api/records/1.0/search/?dataset=prix-des-carburants-en-france-flux-temps-reel&q=cp:${dept}&rows=50&sort=gazole_prix`;
+            // MÉTHODE DE CONTOURNEMENT : On demande le flux général (très stable) sans filtre
+            const url = `https://data.economie.gouv.fr/api/records/1.0/search/?dataset=prix-des-carburants-en-france-flux-temps-reel&rows=100&sort=maj_par_station`;
 
             try {
                 const response = await fetch(url);
                 const data = await response.json();
                 
-                if(!data.records || data.records.length === 0) {
-                    list.innerHTML = `<p style='text-align:center'>❌ Aucune donnée reçue. Réessayez le bouton GO.</p>`;
+                // C'est ici que ton code trie pour toi
+                const stationsDept = data.records.filter(r => r.fields.cp && r.fields.cp.startsWith(dept));
+                
+                if(stationsDept.length === 0) {
+                    list.innerHTML = `<p style='text-align:center'>⚠️ Le serveur est saturé. Appuie à nouveau sur GO dans 5 secondes.</p>`;
                     return;
                 }
 
                 list.innerHTML = "";
-                info.innerText = `📍 ${data.records.length} STATIONS DANS LE ${dept}`;
+                info.innerText = `📍 ${stationsDept.length} STATIONS TROUVÉES DANS LE ${dept}`;
                 
-                data.records.forEach(r => {
+                stationsDept.forEach(r => {
                     const s = r.fields;
                     list.innerHTML += `
                         <div class="live-item">
@@ -143,7 +146,7 @@
                         </div>`;
                 });
             } catch(e) { 
-                list.innerHTML = "<p style='text-align:center'>❌ Blocage réseau. Rafraîchis la page une fois.</p>"; 
+                list.innerHTML = "<p style='text-align:center'>❌ Réseau occupé. Rafraîchis la page.</p>"; 
             }
         }
 
