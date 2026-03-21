@@ -78,10 +78,15 @@
         <button onclick="shareFB()" style="background:#1877F2;" class="btn-social">Facebook</button>
     </div>
 
+    <div style="margin:20px auto; width:90%; max-width:400px;">
+        <script async="async" data-cfasync="false" src="https://pl28952288.profitablecpmratenetwork.com/37a7d91a3f21fde8a322a7a48c93a877/invoke.js"></script>
+        <div id="container-37a7d91a3f21fde8a322a7a48c93a877"></div>
+    </div>
+
     <div class="card" style="font-size: 11px; color: var(--text-muted); line-height: 1.6;">
         <p style="text-align:center; font-weight:800; color:var(--text-main); margin-bottom: 10px;">MENTIONS LÉGALES & CONFIDENTIALITÉ</p>
         <p><b>Informations :</b> Observatoire utilisant les flux officiels. Prix indicatifs.</p>
-        <p><b>Confidentialité :</b> Aucune donnée personnelle n'est collectée. Pub par Adsterra.</p>
+        <p><b>Confidentialité :</b> Aucune donnée personnelle collectée. Pub par Adsterra.</p>
     </div>
 
     <footer style="padding: 30px; font-size: 11px; color: #64748b;">© 2026 Observatoire National - Elyes Mahri</footer>
@@ -106,14 +111,14 @@
             list.innerHTML = "<p style='text-align:center'>🛰️ Connexion au flux direct...</p>";
             card.style.display = "block";
 
-            // URL ULTRA-ROBUSTE : On utilise une recherche globale 'q' sur le département
-            const url = `https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/prix_des_carburants_en_france_reel/records?q=${dept}&limit=50`;
+            // Utilisation d'un Proxy pour éviter les erreurs de réseau/blocages
+            const url = `https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/prix_des_carburants_en_france_reel/records?q=${dept}&limit=100`;
 
             try {
                 const response = await fetch(url);
                 const data = await response.json();
                 
-                // On affine le filtrage pour être sûr que c'est le bon département
+                // Filtrage local pour garantir le 76
                 const stations = data.results.filter(s => s.cp && s.cp.startsWith(dept));
 
                 if(stations.length === 0) {
@@ -141,7 +146,7 @@
                         </div>`;
                 });
             } catch(e) { 
-                list.innerHTML = "<p style='text-align:center'>⚠️ Erreur de réseau national.</p>"; 
+                list.innerHTML = "<p style='text-align:center'>⚠️ Le serveur est trop sollicité. Réessayez dans quelques secondes.</p>"; 
             }
         }
 
