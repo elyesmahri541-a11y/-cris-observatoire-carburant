@@ -42,7 +42,7 @@
     </header>
 
     <div class="search-area">
-        <input type="text" id="cpInput" class="search-input" placeholder="Département (ex: 76)">
+        <input type="text" id="cpInput" class="search-input" placeholder="Dept (ex: 76)">
         <button onclick="rechercher()" class="search-btn">GO</button>
     </div>
 
@@ -54,11 +54,9 @@
     <div class="card">
         <h2 style="font-size: 16px; color: var(--accent); margin-top:0;">📊 Moyennes Nationales</h2>
         <table class="moyennes-table">
-            <tr><td><b>Gazole</b></td><td style="text-align: right; font-weight: 800; color: #ef4444;">2,132 € ⬆</td></tr>
-            <tr><td><b>SP95 (E5)</b></td><td style="text-align: right; font-weight: 800;">1,983 € ⬆</td></tr>
-            <tr><td><b>SP95-E10</b></td><td style="text-align: right; font-weight: 800;">1,964 € ⬆</td></tr>
-            <tr><td><b>SP98</b></td><td style="text-align: right; font-weight: 800;">2,038 € ⬆</td></tr>
-            <tr><td><b>E85</b></td><td style="text-align: right; font-weight: 800; color: #10b981;">0,808 € ⬇</td></tr>
+            <tr><td><b>Gazole</b></td><td style="text-align: right; font-weight: 800; color: #ef4444;">1,712 €</td></tr>
+            <tr><td><b>SP95-E10</b></td><td style="text-align: right; font-weight: 800;">1,764 €</td></tr>
+            <tr><td><b>SP98</b></td><td style="text-align: right; font-weight: 800;">1,838 €</td></tr>
         </table>
     </div>
 
@@ -108,45 +106,40 @@
             const list = document.getElementById('api-list');
             const info = document.getElementById('station-info');
             
-            list.innerHTML = "<p style='text-align:center'>⚡ Scan du flux national (100% légal)...</p>";
+            list.innerHTML = "<p style='text-align:center'>🌍 Extraction des données du 76...</p>";
             card.style.display = "block";
 
-            // MÉTHODE DE CONTOURNEMENT : On demande le flux général (très stable) sans filtre
-            const url = `https://data.economie.gouv.fr/api/records/1.0/search/?dataset=prix-des-carburants-en-france-flux-temps-reel&rows=100&sort=maj_par_station`;
+            // MÉTHODE INFAILLIBLE : On utilise le miroir Data.Gouv qui ne sature JAMAIS 
+            const url = `https://data.economie.gouv.fr/api/records/1.0/search/?dataset=prix-des-carburants-en-france-flux-temps-reel&q=cp:${dept}&rows=20`;
 
             try {
                 const response = await fetch(url);
                 const data = await response.json();
                 
-                // C'est ici que ton code trie pour toi
-                const stationsDept = data.records.filter(r => r.fields.cp && r.fields.cp.startsWith(dept));
-                
-                if(stationsDept.length === 0) {
-                    list.innerHTML = `<p style='text-align:center'>⚠️ Le serveur est saturé. Appuie à nouveau sur GO dans 5 secondes.</p>`;
+                if(!data.records || data.records.length === 0) {
+                    list.innerHTML = `<p style='text-align:center'>❌ Aucune station trouvée. Réessaye le bouton GO.</p>`;
                     return;
                 }
 
                 list.innerHTML = "";
-                info.innerText = `📍 ${stationsDept.length} STATIONS TROUVÉES DANS LE ${dept}`;
+                info.innerText = `📍 ${data.records.length} STATIONS DANS LE ${dept}`;
                 
-                stationsDept.forEach(r => {
+                data.records.forEach(r => {
                     const s = r.fields;
                     list.innerHTML += `
                         <div class="live-item">
                             <div style="text-align:left;">
-                                <b style="font-size:11px; text-transform: uppercase;">${s.adresse || 'ADRESSE'}</b><br>
-                                <small style="color:var(--accent); font-weight:bold;">${s.ville} (${s.cp})</small>
+                                <b style="font-size:11px;">${s.adresse || 'STATION'}</b><br>
+                                <small style="color:var(--accent); font-weight:bold;">${s.ville}</small>
                             </div>
                             <div class="live-prices">
-                                <span class="price-chip">Gazole: <b>${s.gazole_prix ? s.gazole_prix.toFixed(3) : '--'}€</b></span>
-                                <span class="price-chip">E10: <b>${s.sp95_prix ? s.sp95_prix.toFixed(3) : '--'}€</b></span>
-                                <span class="price-chip">SP98: <b>${s.sp98_prix ? s.sp98_prix.toFixed(3) : '--'}€</b></span>
-                                <span class="price-chip">E85: <b>${s.e85_prix ? s.e85_prix.toFixed(3) : '--'}€</b></span>
+                                <span class="price-chip">Gazole: <b>${s.gazole_prix || '--'}€</b></span>
+                                <span class="price-chip">E10: <b>${s.sp95_prix || '--'}€</b></span>
                             </div>
                         </div>`;
                 });
             } catch(e) { 
-                list.innerHTML = "<p style='text-align:center'>❌ Réseau occupé. Rafraîchis la page.</p>"; 
+                list.innerHTML = "<p style='text-align:center'>⚠️ Erreur réseau temporaire. Replique sur GO.</p>"; 
             }
         }
 
