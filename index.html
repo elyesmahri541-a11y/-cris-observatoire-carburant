@@ -11,29 +11,21 @@
             --text-muted: #64748b; --primary: #0f172a; --accent: #3b82f6;
             --secondary: #fbbf24; --border: #e2e8f0; --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
-        @media (prefers-color-scheme: dark) {
-            :root { --bg-body: #0f172a; --bg-card: #1e293b; --text-main: #f1f5f9; --border: rgba(255, 255, 255, 0.05); }
-        }
-        body { text-align: center; font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 0; line-height: 1.5; }
+        body { text-align: center; font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 0; }
         .header { background: var(--primary); padding: 35px 20px 50px; border-bottom-left-radius: 32px; border-bottom-right-radius: 32px; box-shadow: var(--shadow); }
         .header h1 { margin: 0; font-size: 20px; font-weight: 800; color: white; }
         .date-badge { background: var(--secondary); color: #000; display: inline-block; padding: 6px 14px; border-radius: 50px; font-weight: 700; font-size: 11px; margin-top: 12px; }
-        
         .search-area { margin: -25px auto 20px; width: 90%; max-width: 500px; display: flex; gap: 8px; position: relative; z-index: 10; }
         .search-input { flex: 1; padding: 15px; border-radius: 18px; border: 1px solid var(--border); box-shadow: var(--shadow); background: var(--bg-card); color: var(--text-main); outline: none; }
         .search-btn { background: var(--accent); color: white; border: none; padding: 0 20px; border-radius: 18px; font-weight: 800; cursor: pointer; }
-        
         .card { background-color: var(--bg-card); margin: 20px auto; padding: 24px; border-radius: 28px; box-shadow: var(--shadow); max-width: 500px; width: 88%; text-align: left; border: 1px solid var(--border); }
         .moyennes-table { width: 100%; border-collapse: collapse; }
         .moyennes-table td { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
-        
         .btn-main { display: block; width: 100%; padding: 15px; background: var(--accent); color: white; border-radius: 18px; font-size: 13px; font-weight: 700; text-align: center; margin-top: 15px; border:none; cursor:pointer; }
         .duel-card { background: linear-gradient(135deg, #d90429 0%, #800000 100%); color: white; }
         .duel-input { width: 92%; padding: 14px; margin: 8px 0; border-radius: 14px; border: none; background: rgba(255,255,255,0.15); color: white; outline: none; }
-        
         .social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 500px; margin: 20px auto; width: 90%; }
-        .btn-social { padding: 14px; border-radius: 16px; font-size: 12px; font-weight: 700; color: white; text-align: center; border: none; cursor: pointer; }
-        
+        .btn-social { padding: 14px; border-radius: 16px; font-size: 12px; font-weight: 700; color: white; border: none; }
         .live-item { padding: 15px 0; border-bottom: 1px dashed var(--border); }
         .price-chip { font-size: 11px; background: rgba(59, 130, 246, 0.08); padding: 5px; border-radius: 8px; margin: 2px; display: inline-block; color: var(--text-main); font-weight: bold; }
     </style>
@@ -41,17 +33,17 @@
 <body>
 
     <header class="header">
-        <h1>⛽ ESSENCE ECO | LIVE 76</h1>
+        <h1>⛽ ESSENCE ECO | LIVE</h1>
         <div class="date-badge" id="clock">Chargement...</div>
     </header>
 
     <div class="search-area">
-        <input type="text" id="cpInput" class="search-input" placeholder="76 (Seine-Maritime)">
+        <input type="text" id="cpInput" class="search-input" placeholder="Département (ex: 76, 75, 27)">
         <button onclick="rechercher()" class="search-btn">GO</button>
     </div>
 
     <div id="api-card" class="card" style="display:none; border-top: 6px solid var(--accent);">
-        <div id="station-info" style="font-size: 10px; font-weight: 800; color: var(--accent); text-align: center; margin-bottom: 10px;"></div>
+        <div id="station-info" style="font-size: 11px; font-weight: 800; color: var(--accent); text-align: center; margin-bottom: 10px;"></div>
         <div id="api-list"></div>
     </div>
 
@@ -71,8 +63,8 @@
         <input type="number" id="p1" step="0.001" placeholder="Prix Station A" class="duel-input">
         <input type="number" id="p2" step="0.001" placeholder="Prix Station B" class="duel-input">
         <button onclick="duel()" class="btn-main" style="background:var(--secondary); color:#000;">COMPARER</button>
-        <div id="resDuel" style="display:none; margin-top:15px; font-weight:800; text-align:center;">
-            Économie : <span id="valDuel" style="color:var(--secondary);">0</span> € sur 50L
+        <div id="resDuel" style="display:none; margin-top:15px; text-align:center;">
+            Gain : <span id="valDuel" style="color:var(--secondary); font-size: 22px;">0</span> € / 50L
         </div>
     </div>
 
@@ -88,9 +80,9 @@
     </div>
 
     <div class="card" style="font-size: 11px; color: var(--text-muted); line-height: 1.6;">
-        <p style="text-align:center; font-weight:800; color:var(--text-main); margin-bottom: 10px;">MENTIONS LÉGALES & CONFIDENTIALITÉ</p>
-        <p><b>Informations :</b> Observatoire utilisant un flux privé sécurisé (SheetDB). Prix indicatifs.</p>
-        <p><b>Confidentialité :</b> Aucune donnée personnelle n'est collectée par ce site.</p>
+        <p style="text-align:center; font-weight:800; color:var(--text-main);">MENTIONS LÉGALES & CONFIDENTIALITÉ</p>
+        <p><b>Source :</b> Prix issus des flux temps-réel nationaux. Les données sont mises à jour automatiquement.</p>
+        <p><b>Vie privée :</b> Ce site ne collecte aucune donnée personnelle.</p>
     </div>
 
     <footer style="padding: 30px; font-size: 11px; color: #64748b;">© 2026 Observatoire National - Elyes Mahri</footer>
@@ -100,49 +92,61 @@
         setInterval(clock, 1000); clock();
 
         async function rechercher() {
+            let cp = document.getElementById('cpInput').value.trim();
+            if(!cp) return alert("Indiquez un département");
+
             const list = document.getElementById('api-list');
-            const card = document.getElementById('api-card');
-            card.style.display = "block";
-            list.innerHTML = "<p style='text-align:center'>⚡ Accès au flux privé sécurisé...</p>";
+            document.getElementById('api-card').style.display = "block";
+            list.innerHTML = "<p style='text-align:center'>⚡ Recherche des stations...</p>";
+
+            // LE FIX : Utilisation d'un proxy externe pour contourner le blocage du serveur de l'État
+            const url = `https://public.opendatasoft.com/api/records/1.0/search/?dataset=prix-des-carburants-en-france-flux-temps-reel&q=cp:${cp.substring(0,2)}&rows=15&sort=gazole_prix`;
 
             try {
-                // CONNEXION DIRECTE À TON API SHEETDB
-                const response = await fetch('https://sheetdb.io/api/v1/xwxljui4xyvhm');
-                const data = await response.json();
+                // On passe par un proxy CORS pour que ton site ne soit pas rejeté
+                const response = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(url));
+                const resData = await response.json();
+                const data = JSON.parse(resData.contents);
                 
                 list.innerHTML = "";
-                document.getElementById('station-info').innerText = "📍 DERNIÈRES MISES À JOUR (76)";
+                document.getElementById('station-info').innerText = `📍 MEILLEURS PRIX DANS LE ${cp.substring(0,2)}`;
                 
-                data.forEach(s => {
+                if(!data.records || data.records.length === 0) {
+                    list.innerHTML = "<p style='text-align:center'>❌ Aucune station trouvée ici.</p>";
+                    return;
+                }
+
+                data.records.forEach(r => {
+                    const s = r.fields;
                     list.innerHTML += `
                         <div class="live-item">
-                            <b style="font-size:12px; color:var(--primary);">${s.station || s.Station || 'Station'}</b><br>
-                            <small style="color:var(--accent)">${s.ville || s.Ville || '-'}</small><br>
-                            <span class="price-chip">Gazole: ${s.gasoil || s.Gazole || '--'}€</span>
-                            <span class="price-chip">SP95: ${s.sp95 || s.SP95 || '--'}€</span>
-                            <span class="price-chip">E10: ${s.e10 || s.E10 || '--'}€</span>
-                            <span class="price-chip">SP98: ${s.sp98 || s.SP98 || '--'}€</span>
-                            <span class="price-chip">E85: ${s.e85 || s.E85 || '--'}€</span>
+                            <b style="font-size:12px;">${s.adresse || 'STATION'}</b><br>
+                            <small style="color:var(--accent)">${s.ville} (${s.cp})</small><br>
+                            <div style="margin-top:5px;">
+                                <span class="price-chip">Gazole: ${s.gazole_prix || '--'}€</span>
+                                <span class="price-chip">SP95: ${s.sp95_prix || '--'}€</span>
+                                <span class="price-chip">E10: ${s.sp95_e10_prix || s.sp95_prix || '--'}€</span>
+                                <span class="price-chip">SP98: ${s.sp98_prix || '--'}€</span>
+                                <span class="price-chip">E85: ${s.e85_prix || '--'}€</span>
+                            </div>
                         </div>`;
                 });
             } catch(e) {
-                list.innerHTML = "<p style='text-align:center; color:red;'>Erreur de connexion au flux privé.</p>";
+                list.innerHTML = "<p style='text-align:center'>⚠️ Erreur de connexion. Réessayez le bouton GO.</p>";
             }
         }
 
         function duel() {
-            var p1 = document.getElementById('p1').value;
-            var p2 = document.getElementById('p2').value;
+            var p1 = parseFloat(document.getElementById('p1').value);
+            var p2 = parseFloat(document.getElementById('p2').value);
             if(p1 && p2) {
-                var diff = Math.abs(p1 - p2) * 50;
-                document.getElementById('valDuel').innerText = diff.toFixed(2);
+                document.getElementById('valDuel').innerText = (Math.abs(p1 - p2) * 50).toFixed(2);
                 document.getElementById('resDuel').style.display = 'block';
             }
         }
-        function copyLink() { navigator.clipboard.writeText(window.location.href); alert('Lien copié !'); }
-        function shareWA() { window.open("https://api.whatsapp.com/send?text=Prix essence 76 : " + window.location.href); }
+        function copyLink() { navigator.clipboard.writeText(window.location.href); alert('Copié !'); }
+        function shareWA() { window.open("https://api.whatsapp.com/send?text=" + window.location.href); }
         function shareFB() { window.open("https://www.facebook.com/sharer/sharer.php?u=" + window.location.href); }
     </script>
 </body>
 </html>
-
