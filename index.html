@@ -108,26 +108,28 @@
             const list = document.getElementById('api-list');
             const info = document.getElementById('station-info');
             
-            list.innerHTML = "<p style='text-align:center'>⚡ Connexion sécurisée...</p>";
+            list.innerHTML = "<p style='text-align:center'>⚡ Accès direct au flux...</p>";
             card.style.display = "block";
 
-            // NOUVELLE URL ANTI-BLOCAGE : On utilise le moteur V2.1 d'OpenDataSoft
-            const url = `https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/prix_des_carburants_en_france_reel/records?where=cp%20like%20%22${dept}*%22&limit=50&order_by=gazole_prix%20asc`;
+            // SOLUTION DE FORCE : On utilise l'API de téléchargement direct qui est moins saturée
+            const url = `https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/prix_des_carburants_en_france_reel/exports/json?where=cp%20like%20%22${dept}*%22&limit=50`;
 
             try {
                 const response = await fetch(url);
-                if (!response.ok) throw new Error();
-                const data = await response.json();
+                const stations = await response.json();
                 
-                if(!data.results || data.results.length === 0) {
+                if(!stations || stations.length === 0) {
                     list.innerHTML = `<p style='text-align:center'>❌ Aucune station trouvée pour le ${dept}.</p>`;
                     return;
                 }
 
+                // Tri par gazole le moins cher
+                stations.sort((a, b) => (a.gazole_prix || 9) - (b.gazole_prix || 9));
+
                 list.innerHTML = "";
-                info.innerText = `📍 ${data.results.length} STATIONS DANS LE ${dept}`;
+                info.innerText = `📍 ${stations.length} STATIONS DANS LE ${dept}`;
                 
-                data.results.forEach(s => {
+                stations.forEach(s => {
                     list.innerHTML += `
                         <div class="live-item">
                             <div style="text-align:left;">
@@ -143,7 +145,7 @@
                         </div>`;
                 });
             } catch(e) { 
-                list.innerHTML = "<p style='text-align:center'>⚠️ Le flux est saturé. Réessayez dans 10 secondes.</p>"; 
+                list.innerHTML = "<p style='text-align:center'>⚠️ Le serveur est trop occupé. Réessaie dans un instant.</p>"; 
             }
         }
 
