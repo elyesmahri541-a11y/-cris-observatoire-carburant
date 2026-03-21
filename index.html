@@ -42,7 +42,7 @@
     </header>
 
     <div class="search-area">
-        <input type="text" id="cpInput" class="search-input" placeholder="Département (ex: 76)">
+        <input type="text" id="cpInput" class="search-input" placeholder="Dept (ex: 76)">
         <button onclick="rechercher()" class="search-btn">GO</button>
     </div>
 
@@ -101,36 +101,35 @@
 
         async function rechercher() {
             let val = document.getElementById('cpInput').value.trim();
-            if(val.length < 2) return alert("Indique au moins le département (ex: 76)");
+            if(val.length < 2) return alert("Indique un département (ex: 76)");
             
             const dept = val.substring(0, 2);
             const card = document.getElementById('api-card');
             const list = document.getElementById('api-list');
             const info = document.getElementById('station-info');
             
-            list.innerHTML = "<p style='text-align:center'>🛰️ Connexion au flux direct...</p>";
+            list.innerHTML = "<p style='text-align:center'>🚀 Bypass du serveur en cours...</p>";
             card.style.display = "block";
 
-            // Utilisation d'un Proxy pour éviter les erreurs de réseau/blocages
-            const url = `https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/prix_des_carburants_en_france_reel/records?q=${dept}&limit=100`;
+            // UTILISATION D'UN PROXY POUR PASSER LES BLOCAGES
+            const targetUrl = `https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-temps-reel/records?where=cp%20like%20%22${dept}*%22&limit=50`;
+            const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
 
             try {
-                const response = await fetch(url);
-                const data = await response.json();
+                const response = await fetch(proxyUrl);
+                const result = await response.json();
+                const data = JSON.parse(result.contents); // On extrait le contenu du proxy
                 
-                // Filtrage local pour garantir le 76
-                const stations = data.results.filter(s => s.cp && s.cp.startsWith(dept));
-
-                if(stations.length === 0) {
+                if(!data.results || data.results.length === 0) {
                     list.innerHTML = `<p style='text-align:center'>❌ Aucune station trouvée pour le ${dept}.</p>`;
                     return;
                 }
 
-                const stationsTriees = stations.sort((a, b) => (a.gazole_prix || 9) - (b.gazole_prix || 9));
+                const stations = data.results.sort((a, b) => (a.gazole_prix || 9) - (b.gazole_prix || 9));
                 list.innerHTML = "";
-                info.innerText = `📍 ${stationsTriees.length} STATIONS DANS LE ${dept}`;
+                info.innerText = `📍 ${stations.length} STATIONS DANS LE ${dept}`;
                 
-                stationsTriees.forEach(s => {
+                stations.forEach(s => {
                     list.innerHTML += `
                         <div class="live-item">
                             <div style="text-align:left;">
@@ -146,7 +145,7 @@
                         </div>`;
                 });
             } catch(e) { 
-                list.innerHTML = "<p style='text-align:center'>⚠️ Le serveur est trop sollicité. Réessayez dans quelques secondes.</p>"; 
+                list.innerHTML = "<p style='text-align:center'>⚠️ Le flux national est inaccessible. Réessayez dans 30 secondes.</p>"; 
             }
         }
 
