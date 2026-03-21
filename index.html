@@ -32,33 +32,21 @@
         }
 
         body { text-align: center; font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 0; line-height: 1.5; }
-
         .header { background: var(--primary); padding: 35px 20px 50px; border-bottom-left-radius: 32px; border-bottom-right-radius: 32px; box-shadow: var(--shadow); }
-        .header h1 { margin: 0; font-size: 20px; font-weight: 800; color: white; letter-spacing: -0.5px; }
-        
+        .header h1 { margin: 0; font-size: 20px; font-weight: 800; color: white; }
         .date-badge { background: var(--secondary); color: #000; display: inline-block; padding: 6px 14px; border-radius: 50px; font-weight: 700; font-size: 11px; margin-top: 12px; }
-
         .search-area { margin: -25px auto 20px; width: 90%; max-width: 500px; display: flex; gap: 8px; position: relative; z-index: 10; }
         .search-input { flex: 1; padding: 15px; border-radius: 18px; border: 1px solid var(--border); box-shadow: var(--shadow); background: var(--bg-card); color: var(--text-main); outline: none; }
         .search-btn { background: var(--accent); color: white; border: none; padding: 0 20px; border-radius: 18px; font-weight: 800; cursor: pointer; }
-
         .card { background-color: var(--bg-card); margin: 20px auto; padding: 24px; border-radius: 28px; box-shadow: var(--shadow); max-width: 500px; width: 88%; text-align: left; border: 1px solid var(--border); }
-
         .moyennes-table { width: 100%; border-collapse: collapse; }
         .moyennes-table td { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
-
         .btn-main { display: block; width: 100%; padding: 15px; background: var(--accent); color: white; text-decoration: none; border-radius: 18px; font-size: 13px; font-weight: 700; text-align: center; margin-top: 15px; border:none; cursor:pointer; }
-
         .duel-card { background: linear-gradient(135deg, #d90429 0%, #800000 100%); color: white; }
         .duel-input { width: 92%; padding: 14px; margin: 8px 0; border-radius: 14px; border: none; background: rgba(255,255,255,0.15); color: white; outline: none; }
-
-        .social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 500px; margin: 20px auto; width: 90%; }
-        .btn-social { padding: 14px; border-radius: 16px; text-decoration: none; font-size: 12px; font-weight: 700; color: white; text-align: center; border: none; cursor: pointer; }
-
         .live-item { padding: 15px 0; border-bottom: 1px dashed var(--border); }
         .live-prices { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 8px; }
         .price-chip { font-size: 11px; background: rgba(59, 130, 246, 0.08); padding: 5px; border-radius: 8px; }
-        
         .station-count { font-size: 10px; text-transform: uppercase; color: var(--accent); font-weight: 800; margin-bottom: 10px; display: block; text-align: center; }
     </style>
 </head>
@@ -70,7 +58,7 @@
     </header>
 
     <div class="search-area">
-        <input type="text" id="cpInput" class="search-input" placeholder="Tape ton CP ou Dept (ex: 56000)">
+        <input type="text" id="cpInput" class="search-input" placeholder="Département ou CP (ex: 76)">
         <button onclick="rechercher()" class="search-btn">GO</button>
     </div>
 
@@ -100,12 +88,6 @@
         </div>
     </div>
 
-    <div class="social-grid">
-        <button onclick="copyLink()" style="grid-column: span 2; background:#334155;" class="btn-social">🔗 Copier le lien</button>
-        <button onclick="shareWA()" style="background:#25D366;" class="btn-social">WhatsApp</button>
-        <button onclick="shareFB()" style="background:#1877F2;" class="btn-social">Facebook</button>
-    </div>
-
     <div style="margin:20px auto; width:90%; max-width:400px;">
         <script async="async" data-cfasync="false" src="https://pl28952288.profitablecpmratenetwork.com/37a7d91a3f21fde8a322a7a48c93a877/invoke.js"></script>
         <div id="container-37a7d91a3f21fde8a322a7a48c93a877"></div>
@@ -114,7 +96,7 @@
     <div class="card" style="font-size: 11px; color: var(--text-muted); line-height: 1.6;">
         <p style="text-align:center; font-weight:800; color:var(--text-main); margin-bottom: 10px;">MENTIONS LÉGALES & CONFIDENTIALITÉ</p>
         <p><b>Données :</b> Flux officiel prix-carburants.gouv.fr. Prix indicatifs.</p>
-        <p><b>Privacy :</b> Pas de collecte. Publicités via Adsterra.</p>
+        <p><b>Privacy :</b> Pas de collecte. Pubs via Adsterra.</p>
     </div>
 
     <footer style="padding: 30px; font-size: 11px; color: #64748b;">© 2026 Observatoire National - Elyes Mahri</footer>
@@ -129,39 +111,39 @@
         setInterval(clock, 1000); clock();
 
         async function rechercher() {
-            let saisie = document.getElementById('cpInput').value;
-            if(!saisie || saisie.length < 2) return alert("Indique au moins un département (ex: 56) !");
+            let saisie = document.getElementById('cpInput').value.trim();
+            if(!saisie || saisie.length < 2) return alert("Indique un département (ex: 76) ou CP !");
             
-            // On ne garde que les 2 premiers chiffres pour chercher sur tout le département
+            // Prend les 2 premiers chiffres si c'est un CP complet
             const dept = saisie.substring(0, 2);
             
             const card = document.getElementById('api-card');
             const list = document.getElementById('api-list');
             const info = document.getElementById('station-info');
             
-            list.innerHTML = `<p style='text-align:center; font-size:12px;'>🛰️ Récupération des stations du département ${dept}...</p>`;
+            list.innerHTML = "<p style='text-align:center; font-size:12px;'>🛰️ Connexion au flux gouvernemental...</p>";
             info.innerText = "";
             card.style.display = "block";
 
-            // Limite à 200 pour couvrir tout le département
-            const url = `https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-temps-reel/records?limit=100&where=cp%20like%20'${dept}*'`;
+            // Nouvelle URL plus simple pour éviter les erreurs de syntaxe API
+            const url = `https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-temps-reel/records?where=cp%20like%20'${dept}*'&limit=100`;
 
             try {
                 const response = await fetch(url);
                 const data = await response.json();
                 
                 if(!data.results || data.results.length === 0) {
-                    list.innerHTML = "<p style='text-align:center'>❌ Aucune station trouvée.</p>";
+                    list.innerHTML = "<p style='text-align:center'>❌ Aucune station trouvée pour " + dept + ".</p>";
                     return;
                 }
 
-                // TRI : Moins cher au plus cher (sur le Gazole par défaut)
-                const stationsTriees = data.results.sort((a, b) => (a.gazole_prix || 9) - (b.gazole_prix || 9));
+                // Tri automatique par prix du Gazole
+                const stations = data.results.sort((a, b) => (a.gazole_prix || 9) - (b.gazole_prix || 9));
 
                 list.innerHTML = "";
-                info.innerText = `📍 ${stationsTriees.length} stations trouvées dans le ${dept}`;
+                info.innerText = `📍 ${stations.length} stations trouvées dans le ${dept}`;
                 
-                stationsTriees.forEach(s => {
+                stations.forEach(s => {
                     list.innerHTML += `
                         <div class="live-item">
                             <div style="text-align:left;">
@@ -177,7 +159,7 @@
                         </div>`;
                 });
             } catch(e) { 
-                list.innerHTML = "<p style='text-align:center; color:#ef4444;'>⚠️ Erreur de connexion au flux national.</p>"; 
+                list.innerHTML = "<p style='text-align:center; color:#ef4444;'>⚠️ Le flux Gouv est saturé. Réessaye.</p>"; 
             }
         }
 
@@ -190,10 +172,6 @@
                 document.getElementById('resDuel').style.display = 'block';
             }
         }
-
-        function copyLink() { navigator.clipboard.writeText(SITE_URL); alert('Lien copié !'); }
-        function shareWA() { window.open("https://api.whatsapp.com/send?text=Essence moins chère ici : " + SITE_URL); }
-        function shareFB() { window.open("https://www.facebook.com/sharer/sharer.php?u=" + SITE_URL); }
     </script>
 </body>
 </html>
