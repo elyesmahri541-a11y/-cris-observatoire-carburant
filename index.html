@@ -6,108 +6,163 @@
     <title>Essence Eco Normandie</title>
     <script src="https://pl28952276.profitablecpmratenetwork.com/68/19/1f/68191f7887eac7841580d0ccead48e50.js"></script>
     <style>
+        /* BASE & MODE CLAIR */
         :root {
-            --bg-body: #f4f7f6; --bg-card: #ffffff; --text-main: #333; --primary: #003566; --secondary: #ffea00;
+            --bg-body: #f4f7f6;
+            --bg-card: #ffffff;
+            --text-main: #333333;
+            --text-sub: #777777;
+            --primary: #003566;
+            --secondary: #ffea00;
+            --border: #eeeeee;
+            --shadow: rgba(0,0,0,0.05);
+            --link-maps: #003566; /* Couleur liens maps clair */
         }
-        @media (prefers-color-scheme: dark) {
-            :root { --bg-body: #121212; --bg-card: #1e1e1e; --text-main: #e0e0e0; --primary: #001d3d; }
-        }
-        body { text-align: center; font-family: sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 0; }
-        .card { background-color: var(--bg-card); margin: 15px; padding: 15px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: left; }
-        .moyennes-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        .moyennes-table td { padding: 8px; border-bottom: 1px solid #eee; }
-        .top-list { list-style: none; padding: 0; font-size: 12px; line-height: 2.5; }
-        .top-list li { border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 5px; }
-        
-        /* STYLE DES BADGES */
-        .badge { display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; margin-right: 5px; color: white; }
-        .b-fresh { background: #38b000; } /* Vert - Moins de 24h */
-        .b-ok { background: #777; }    /* Gris - Récent */
-        .b-old { background: #f39c12; }  /* Orange - À vérifier */
-        .b-crit { background: #e74c3c; } /* Rouge - Vieux */
 
-        .btn-maps { text-decoration: none; font-weight: bold; color: var(--primary); margin-left: 5px; }
-        .duel-card { background: var(--primary); color: white; text-align: center; }
-        .duel-input { width: 80%; padding: 10px; margin: 5px; border-radius: 5px; border: none; }
+        /* 🌙 MODE SOMBRE AUTOMATIQUE */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-body: #121212;
+                --bg-card: #1e1e1e;
+                --text-main: #e0e0e0;
+                --text-sub: #aaaaaa;
+                --primary: #001d3d;
+                --border: #333333;
+                --shadow: rgba(0,0,0,0.3);
+                --link-maps: #ffea00; /* Couleur liens maps sombre pour lisibilité */
+            }
+            body { background-color: var(--bg-body); color: var(--text-main); }
+            .card { background-color: var(--bg-card); box-shadow: 0 4px 8px var(--shadow); }
+            .moyennes-table tr { border-bottom: 1px solid var(--border); }
+            .btn-maps { color: var(--link-maps) !important; }
+            .top-76 { background-color: #002855; border: 1px solid #004080; }
+            .top-27 { background-color: #1b4332; border: 1px solid #2d6a4f; }
+            .duel-card { background-color: #d90429; }
+            .cgu-card { background-color: var(--bg-card); border-top: 1px solid var(--border); }
+        }
+
+        /* STYLES GÉNÉRAUX */
+        body { text-align: center; font-family: sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 0; transition: background 0.3s, color 0.3s; }
+        .card { background-color: var(--bg-card); margin: 15px; padding: 15px; border-radius: 12px; box-shadow: 0 4px 8px var(--shadow); transition: background 0.3s, box-shadow 0.3s; }
+        .moyennes-table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+        .moyennes-table tr { border-bottom: 1px solid var(--border); transition: border 0.3s; }
+        .moyennes-table td { padding: 6px; }
+        
+        /* ⚔️ DUEL DE STATIONS */
+        .duel-card { background-color: #d90429; color: white; padding: 20px; text-align: center; }
+        .duel-input { width: 85%; padding: 10px; border-radius: 5px; border: none; margin-bottom: 10px; text-align: center; font-size: 16px; background: rgba(255,255,255,0.9); }
+        .duel-btn { background-color: white; color: #d90429; border: none; padding: 12px; border-radius: 5px; font-weight: bold; cursor: pointer; width: 90%; font-size: 14px; }
+        .duel-res { display: none; margin-top: 15px; padding: 10px; background: rgba(255,255,255,0.2); border-radius: 8px; font-weight: bold; }
+        
+        /* LISTES STATIONS */
+        .top-list { list-style: none; padding: 0; font-size: 12px; line-height: 2; text-align: left; }
+        .btn-maps { text-decoration: none; font-weight: bold; color: var(--link-maps); transition: color 0.3s; }
+        
+        /* 🛡️ BADGES DE CONFIANCE (CODE COULEUR) */
+        .badge { display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; margin-right: 5px; color: white; vertical-align: middle; }
+        .b-fresh { background-color: #38b000; } /* Vert Flash - Moins de 24h */
+        .b-ok { background-color: #777777; }    /* Gris ✅ - Moins de 3j */
+        .b-old { background-color: #f39c12; }   /* Orange 🟠 - Moins de 7j */
+        .b-crit { background-color: #e74c3c; }  /* Rouge 🚨 - Plus de 7j */
+        
+        /* PARTAGE */
+        .share-grid { margin: 20px 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .share-btn { color: white; padding: 12px; border-radius: 8px; text-decoration: none; font-size: 11px; font-weight: bold; display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
+        .btn-copier { background-color: #444444; border: none; cursor: pointer; grid-column: span 2; }
+        
+        /* CGU & PRIVACY */
+        .cgu-card { margin: 20px 15px; padding: 15px; font-size: 10px; color: var(--text-sub); text-align: left; border-radius: 10px; line-height: 1.5; transition: background 0.3s, border 0.3s; }
     </style>
 </head>
 <body>
 
-    <div style="background: var(--primary); color: white; padding: 15px;">
+    <div style="background-color: var(--primary); color: white; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
         <h1 style="margin: 0; font-size: 18px;">⛽ ESSENCE ECO NORMANDIE</h1>
-        <p style="background: var(--secondary); color: #000; display: inline-block; padding: 3px 10px; border-radius: 5px; font-weight: bold; font-size: 11px; margin-top: 8px;">
-            ✅ Mis à jour le 21 Mars 2026
+        <p style="background-color: var(--secondary); color: #000; display: inline-block; padding: 3px 10px; border-radius: 5px; font-weight: bold; font-size: 11px; margin-top: 8px;">
+            ✅ Mis à jour le 21 Mars 2026 à 11h55
         </p>
     </div>
 
-    <div class="card">
-        <h2 style="font-size: 14px; margin-top: 0;">📊 Moyennes France</h2>
+    <div class="card moyennes-card">
+        <h2 style="font-size: 14px; color: var(--primary); margin-top: 0; transition: color 0.3s;">📊 Moyennes France (Source : Prix-Carburant.eu)</h2>
         <table class="moyennes-table">
-            <tr><td>Gazole</td><td style="text-align:right;">2,132 € ⬆</td></tr>
-            <tr><td>SP95 (E5)</td><td style="text-align:right;">1,983 € ⬆</td></tr>
-            <tr><td>E10 (SP95)</td><td style="text-align:right;">1,964 € ⬆</td></tr>
-            <tr><td>E85</td><td style="text-align:right; color:#38b000;">0,808 € ⬇</td></tr>
+            <tr><td><b>Gazole</b></td><td style="text-align: right; font-weight: bold; color: #d90429;">2,132 € ⬆</td></tr>
+            <tr><td><b>SP95 (E5)</b></td><td style="text-align: right; font-weight: bold;">1,983 € ⬆</td></tr>
+            <tr><td><b>E10 (SP95)</b></td><td style="text-align: right; font-weight: bold;">1,964 € ⬆</td></tr>
+            <tr><td><b>SP98 (E5)</b></td><td style="text-align: right; font-weight: bold;">2,038 € ⬆</td></tr>
+            <tr><td><b>GPL-c</b></td><td style="text-align: right; font-weight: bold;">0,984 € ⬆</td></tr>
+            <tr style="border:none;"><td><b>E85</b></td><td style="text-align: right; font-weight: bold; color: #38b000;">0,808 € ⬇</td></tr>
         </table>
-        <a href="https://www.prix-carburants.gouv.fr/" target="_blank" style="display:block; text-align:center; background:var(--primary); color:white; text-decoration:none; padding:10px; border-radius:5px; font-size:12px; font-weight:bold; margin-top:10px;">🔍 CHERCHER DANS TOUTE LA FRANCE</a>
+        <a href="https://www.prix-carburants.gouv.fr/" target="_blank" style="display:block; text-align:center; background-color: var(--primary); color: white; text-decoration: none; padding: 10px; border-radius: 5px; font-size: 12px; font-weight:bold; margin-top: 10px;">🔍 CHERCHER DANS TOUTE LA FRANCE</a>
     </div>
 
     <div class="card duel-card">
         <h2 style="font-size: 16px; margin: 0;">⚔️ Duel de Stations</h2>
-        <input type="number" id="p1" step="0.001" placeholder="Prix Station A" class="duel-input">
-        <input type="number" id="p2" step="0.001" placeholder="Prix Station B" class="duel-input">
-        <button onclick="duel()" style="width:85%; padding:10px; background:var(--secondary); border:none; border-radius:5px; font-weight:bold; cursor:pointer;">CALCULER L'ÉCART</button>
-        <div id="resDuel" style="display:none; margin-top:10px; font-weight:bold; color:var(--secondary);">
-            Économie : <span id="valDuel">0</span> € sur 50L
+        <p style="font-size: 11px; margin-bottom: 10px;">Compare deux stations n'importe où !</p>
+        <input type="number" id="p1" step="0.001" placeholder="Prix Station A (ex: 2.15)" class="duel-input">
+        <input type="number" id="p2" step="0.001" placeholder="Prix Station B (ex: 1.98)" class="duel-input">
+        <button onclick="duel()" class="duel-btn">VOIR LA DIFFÉRENCE</button>
+        <div id="resDuel" class="duel-res">
+            <span style="font-size: 18px;">Écart : <b style="color: var(--secondary);"><span id="valDuel">0</span> €</b> sur ton plein (50L) !</span>
         </div>
     </div>
 
-    <div class="card" style="border-left: 5px solid #0d47a1;">
-        <h3 style="margin-top: 0; font-size: 15px; color: #0d47a1;">🏆 Seine-Maritime (76)</h3>
+    <div class="card top-76" style="background-color: #e3f2fd; border: 1px solid #bbdefb; text-align: left; transition: background 0.3s, border 0.3s;">
+        <h3 style="margin: 0 0 10px 0; font-size: 15px; color: #0d47a1; text-align: center;">🏆 Moins chers (76)</h3>
         <ul class="top-list">
-            <li><span class="badge b-old">🟠 07/03</span> <b>Gazole :</b> 1,967€ <a href="https://www.google.com/maps/search/Auchan+Canteleu" target="_blank" class="btn-maps">📍 Canteleu</a></li>
-            <li><span class="badge b-old">🟠 07/03</span> <b>E10 :</b> 1,811€ <a href="https://www.google.com/maps/search/Auchan+Canteleu" target="_blank" class="btn-maps">📍 Canteleu</a></li>
-            <li><span class="badge b-ok">✅ 17/03</span> <b>SP95 :</b> 1,869€ <a href="https://www.google.com/maps/search/Carrefour+Market+Fecamp" target="_blank" class="btn-maps">📍 Fécamp</a></li>
-            <li><span class="badge b-crit">🚨 08/01</span> <b>GPL :</b> 0,879€ <a href="https://www.google.com/maps/search/Carrefour+Market+Goderville" target="_blank" class="btn-maps">📍 Goderville</a></li>
-            <li><span class="badge b-fresh">🟢 21/03</span> <b>E85 :</b> 0,677€ <a href="https://www.google.com/maps/search/Leclerc+Gonfreville" target="_blank" class="btn-maps">📍 Gonfreville</a></li>
+            <li><span class="badge b-old">🟠 07/03 à 14:07</span>⛽ <b>Gazole :</b> 1,967€ - Auchan <a href="https://www.google.com/maps/search/Auchan+Canteleu" target="_blank" class="btn-maps">📍 Canteleu</a></li>
+            <li><span class="badge b-old">🟠 07/03 à 14:07</span>⛽ <b>SP95-E10 :</b> 1,811€ - Auchan <a href="https://www.google.com/maps/search/Auchan+Canteleu" target="_blank" class="btn-maps">📍 Canteleu</a></li>
+            <li><span class="badge b-ok">✅ 17/03 à 08:40</span>⛽ <b>SP95-E5 :</b> 1,869€ - Carrefour <a href="https://www.google.com/maps/search/Carrefour+Fécamp" target="_blank" class="btn-maps">📍 Fécamp</a></li>
+            <li><span class="badge b-old">🟠 25/02 à 09:11</span>⛽ <b>SP98 :</b> 1,836€ - Esso <a href="https://www.google.com/maps/search/Esso+Gaillefontaine" target="_blank" class="btn-maps">📍 Gaillef.</a></li>
+            <li><span class="badge b-crit">🚨 08/01 à 16:23</span>⛽ <b>GPL :</b> 0,879€ - Carrefour <a href="https://www.google.com/maps/search/Carrefour+Goderville" target="_blank" class="btn-maps">📍 Goderville</a></li>
+            <li><span class="badge b-fresh">🟢 21/03 à 01:17</span>⛽ <b>E85 :</b> 0,677€ - Leclerc <a href="https://www.google.com/maps/search/Leclerc+Gonfreville" target="_blank" class="btn-maps">📍 Gonfreville</a></li>
         </ul>
-        <a href="https://www.prix-carburants.gouv.fr/" target="_blank" style="display:block; text-align:center; background:#0d47a1; color:white; text-decoration:none; padding:8px; border-radius:5px; font-size:11px; font-weight:bold;">🔍 PROCHE DE MOI (76)</a>
+        <a href="https://www.prix-carburants.gouv.fr/" target="_blank" style="display:block; text-align:center; background-color: #0d47a1; color: white; text-decoration: none; padding: 8px; border-radius: 5px; font-size: 11px; font-weight:bold; margin-top: 10px;">🔍 PROCHE DE MOI (76)</a>
     </div>
 
-    <div class="card" style="border-left: 5px solid #33691e;">
-        <h3 style="margin-top: 0; font-size: 15px; color: #33691e;">🏆 Eure (27)</h3>
+    <div class="card top-27" style="background-color: #f1f8e9; border: 1px solid #dcedc8; text-align: left; transition: background 0.3s, border 0.3s;">
+        <h3 style="margin: 0 0 10px 0; font-size: 15px; color: #33691e; text-align: center;">🏆 Moins chers (27)</h3>
         <ul class="top-list">
-            <li><span class="badge b-old">🟠 12/03</span> <b>Gazole :</b> 1,986€ <a href="https://www.google.com/maps/search/Carrefour+Market+Charleval" target="_blank" class="btn-maps">📍 Charleval</a></li>
-            <li><span class="badge b-fresh">🟢 21/03</span> <b>SP95 :</b> 1,915€ <a href="https://www.google.com/maps/search/Carrefour+Market+Pacy+sur+Eure" target="_blank" class="btn-maps">📍 Pacy</a></li>
-            <li><span class="badge b-ok">✅ 16/03</span> <b>SP98 :</b> 1,890€ <a href="https://www.google.com/maps/search/Carrefour+Market+Thiberville" target="_blank" class="btn-maps">📍 Thiberville</a></li>
-            <li><span class="badge b-fresh">🟢 21/03</span> <b>E85 :</b> 0,691€ <a href="https://www.google.com/maps/search/Leclerc+Menneval" target="_blank" class="btn-maps">📍 Menneval</a></li>
+            <li><span class="badge b-old">🟠 12/03 à 08:48</span>⛽ <b>Gazole :</b> 1,986€ - Carrefour <a href="https://www.google.com/maps/search/Carrefour+Charleval" target="_blank" class="btn-maps">📍 Charleval</a></li>
+            <li><span class="badge b-old">🟠 12/03 à 08:48</span>⛽ <b>SP95-E10 :</b> 1,819€ - Carrefour <a href="https://www.google.com/maps/search/Carrefour+Charleval" target="_blank" class="btn-maps">📍 Charleval</a></li>
+            <li><span class="badge b-fresh">🟢 21/03 à 08:52</span>⛽ <b>SP95-E5 :</b> 1,915€ - Carrefour <a href="https://www.google.com/maps/search/Intermarché+Évreux" target="_blank" class="btn-maps">📍 Pacy</a></li>
+            <li><span class="badge b-ok">✅ 16/03 à 15:21</span>⛽ <b>SP98 :</b> 1,890€ - Carrefour <a href="https://www.google.com/maps/search/Carrefour+Thiberville" target="_blank" class="btn-maps">📍 Thiberville</a></li>
+            <li><span class="badge b-old">🟠 24/02 à 08:37</span>⛽ <b>GPL :</b> 0,849€ - Intermarché <a href="https://www.google.com/maps/search/Intermarché+Verneuil" target="_blank" class="btn-maps">📍 Verneuil</a></li>
+            <li><span class="badge b-fresh">🟢 21/03 à 01:16</span>⛽ <b>E85 :</b> 0,691€ - Leclerc <a href="https://www.google.com/maps/search/Leclerc+Menneval" target="_blank" class="btn-maps">📍 Menneval</a></li>
         </ul>
-        <a href="https://www.prix-carburants.gouv.fr/" target="_blank" style="display:block; text-align:center; background:#33691e; color:white; text-decoration:none; padding:8px; border-radius:5px; font-size:11px; font-weight:bold;">🔍 PROCHE DE MOI (27)</a>
+        <a href="https://www.prix-carburants.gouv.fr/" target="_blank" style="display:block; text-align:center; background-color: #33691e; color: white; text-decoration: none; padding: 8px; border-radius: 5px; font-size: 11px; font-weight:bold; margin-top: 10px;">🔍 PROCHE DE MOI (27)</a>
     </div>
 
-    <div style="margin: 20px 15px;">
-        <button onclick="navigator.clipboard.writeText('https://elyesmahri541-a11y.github.io/-cris-observatoire-carburant/'); alert('Lien copié !');" style="width:100%; padding:12px; background:#444; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer; margin-bottom:10px;">🔗 Copier le lien du site</button>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-            <a href="https://api.whatsapp.com/send?text=Regarde%20les%20prix%20ici%20:%20URL" style="background:#25D366; color:white; padding:12px; border-radius:8px; text-decoration:none; font-size:12px; font-weight:bold;">WhatsApp</a>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=URL" target="_blank" style="background:#1877F2; color:white; padding:12px; border-radius:8px; text-decoration:none; font-size:12px; font-weight:bold;">Facebook</a>
-        </div>
+    <div class="share-grid">
+        <button onclick="navigator.clipboard.writeText('https://elyesmahri541-a11y.github.io/-cris-observatoire-carburant/'); alert('Lien copié !');" class="share-btn btn-copier">🔗 Copier le lien du site</button>
+        <a href="https://api.whatsapp.com/send?text=Economise%20sur%20ton%20plein%20ici%20:%20https://elyesmahri541-a11y.github.io/-cris-observatoire-carburant/" class="share-btn" style="background-color: #25D366;">WhatsApp</a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://elyesmahri541-a11y.github.io/-cris-observatoire-carburant/" target="_blank" class="share-btn" style="background-color: #1877F2;">Facebook</a>
     </div>
 
-    <div style="margin: 20px 15px; padding: 15px; font-size: 10px; color: #777; text-align: left; background: var(--bg-card); border-radius: 10px;">
-        <p style="text-align:center; font-weight:bold; text-transform:uppercase;">Conditions & Confidentialité</p>
-        <p><b>CGU :</b> Site indicatif (Sources: Prix-Carburant.eu / Gouv.fr). L'éditeur ne peut être tenu responsable des erreurs de prix.</p>
-        <p><b>RGPD :</b> Aucun recueil de données personnelles. Cookies publicitaires Adsterra présents. Hébergement : GitHub Inc.</p>
+    <div style="margin: 20px auto; width: 95%; max-width: 400px; background-color: var(--bg-card); padding: 10px; border-radius: 10px; transition: background 0.3s;">
+        <script async="async" data-cfasync="false" src="https://pl28952288.profitablecpmratenetwork.com/37a7d91a3f21fde8a322a7a48c93a877/invoke.js"></script>
+        <div id="container-37a7d91a3f21fde8a322a7a48c93a877"></div>
     </div>
 
-    <footer style="padding: 20px; font-size: 10px; color: #999;">© 2026 Observatoire Normand - Elyes Mahri</footer>
+    <div class="cgu-card">
+        <p style="text-align:center; font-weight:bold; margin-bottom:10px; text-transform:uppercase; color: var(--text-main);">Conditions & Confidentialité</p>
+        <p><b>CGU :</b> Le site https://elyesmahri541-a11y.github.io/-cris-observatoire-carburant/ est un observatoire bénévole. Les prix sont indicatifs et peuvent changer (Sources: Prix-Carburant.eu / Gouv.fr). L'éditeur ne peut être tenu responsable des erreurs de prix, de la fermeture des stations ou de l'épuisement des stocks en temps réel.</p>
+        <p><b>RGPD (Art. 15/21) :</b> Ce site ne collecte aucune donnée personnelle directe (nom, email, localisation précise). Des cookies de régies publicitaires (Adsterra) peuvent être déposés pour le fonctionnement des annonces. Vous pouvez gérer ces cookies via les réglages de votre navigateur. Hébergement : GitHub Inc., San Francisco, USA.</p>
+    </div>
+
+    <footer style="padding: 20px; font-size: 10px; color: var(--text-sub);">© 2026 Observatoire Normand - Elyes Mahri</footer>
 
     <script>
         function duel() {
             var p1 = document.getElementById('p1').value;
             var p2 = document.getElementById('p2').value;
             if(p1 > 0 && p2 > 0) {
-                var res = (Math.abs(p1 - p2) * 50).toFixed(2);
-                document.getElementById('valDuel').innerText = res;
+                // parseFloat pour gérer les virgules et points décimaux
+                var resultat = (Math.abs(parseFloat(p1) - parseFloat(p2)) * 50).toFixed(2);
+                document.getElementById('valDuel').innerText = resultat;
                 document.getElementById('resDuel').style.display = 'block';
+            } else {
+                alert("Entre les deux prix pour comparer !");
             }
         }
     </script>
