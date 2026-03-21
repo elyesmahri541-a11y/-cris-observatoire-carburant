@@ -3,36 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Essence Eco | Observatoire National Live</title>
+    <title>Essence Eco | Observatoire National</title>
     <script src="https://pl28952276.profitablecpmratenetwork.com/68/19/1f/68191f7887eac7841580d0ccead48e50.js"></script>
     <style>
         :root {
-            --bg-body: #f8fafc;
-            --bg-card: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --primary: #0f172a;
-            --accent: #3b82f6;
-            --secondary: #fbbf24;
-            --border: #e2e8f0;
-            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --bg-body: #f8fafc; --bg-card: #ffffff; --text-main: #1e293b;
+            --text-muted: #64748b; --primary: #0f172a; --accent: #3b82f6;
+            --secondary: #fbbf24; --border: #e2e8f0; --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
-
         @media (prefers-color-scheme: dark) {
-            :root {
-                --bg-body: #0f172a;
-                --bg-card: #1e293b;
-                --text-main: #f1f5f9;
-                --text-muted: #94a3b8;
-                --primary: #1e293b;
-                --accent: #60a5fa;
-                --border: rgba(255, 255, 255, 0.05);
-                --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
-            }
+            :root { --bg-body: #0f172a; --bg-card: #1e293b; --text-main: #f1f5f9; --border: rgba(255, 255, 255, 0.05); }
         }
-
-        body { text-align: center; font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 0; line-height: 1.5; }
-        .header { background: var(--primary); padding: 35px 20px 50px; border-bottom-left-radius: 32px; border-bottom-right-radius: 32px; box-shadow: var(--shadow); }
+        body { text-align: center; font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 0; }
+        .header { background: var(--primary); padding: 35px 20px 50px; border-bottom-left-radius: 32px; border-bottom-right-radius: 32px; }
         .header h1 { margin: 0; font-size: 20px; font-weight: 800; color: white; }
         .date-badge { background: var(--secondary); color: #000; display: inline-block; padding: 6px 14px; border-radius: 50px; font-weight: 700; font-size: 11px; margin-top: 12px; }
         .search-area { margin: -25px auto 20px; width: 90%; max-width: 500px; display: flex; gap: 8px; position: relative; z-index: 10; }
@@ -41,31 +24,30 @@
         .card { background-color: var(--bg-card); margin: 20px auto; padding: 24px; border-radius: 28px; box-shadow: var(--shadow); max-width: 500px; width: 88%; text-align: left; border: 1px solid var(--border); }
         .moyennes-table { width: 100%; border-collapse: collapse; }
         .moyennes-table td { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
-        .btn-main { display: block; width: 100%; padding: 15px; background: var(--accent); color: white; text-decoration: none; border-radius: 18px; font-size: 13px; font-weight: 700; text-align: center; margin-top: 15px; border:none; cursor:pointer; }
+        .btn-main { display: block; width: 100%; padding: 15px; background: var(--accent); color: white; border-radius: 18px; font-size: 13px; font-weight: 700; text-align: center; margin-top: 15px; border:none; cursor:pointer; text-decoration: none; }
         .duel-card { background: linear-gradient(135deg, #d90429 0%, #800000 100%); color: white; }
-        .duel-input { width: 92%; padding: 14px; margin: 8px 0; border-radius: 14px; border: none; background: rgba(255,255,255,0.15); color: white; outline: none; }
+        .duel-input { width: 92%; padding: 14px; margin: 8px 0; border-radius: 14px; border: none; background: rgba(255,255,255,0.15); color: white; }
         .live-item { padding: 15px 0; border-bottom: 1px dashed var(--border); }
         .live-prices { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 8px; }
         .price-chip { font-size: 11px; background: rgba(59, 130, 246, 0.08); padding: 5px; border-radius: 8px; }
-        .station-count { font-size: 10px; text-transform: uppercase; color: var(--accent); font-weight: 800; margin-bottom: 10px; display: block; text-align: center; }
         .social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 500px; margin: 20px auto; width: 90%; }
-        .btn-social { padding: 14px; border-radius: 16px; text-decoration: none; font-size: 12px; font-weight: 700; color: white; text-align: center; border: none; cursor: pointer; }
+        .btn-social { padding: 14px; border-radius: 16px; font-size: 12px; font-weight: 700; color: white; text-align: center; border: none; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <header class="header">
-        <h1>⛽ ESSENCE ECO | LIVE</h1>
+        <h1>⛽ ESSENCE ECO | NATIONAL</h1>
         <div class="date-badge" id="clock">Chargement...</div>
     </header>
 
     <div class="search-area">
-        <input type="text" id="cpInput" class="search-input" placeholder="Département ou CP (ex: 76)">
+        <input type="text" id="cpInput" class="search-input" placeholder="Département ou Ville (ex: 76)">
         <button onclick="rechercher()" class="search-btn">GO</button>
     </div>
 
     <div id="api-card" class="card" style="display:none; border-top: 6px solid var(--accent);">
-        <span id="station-info" class="station-count"></span>
+        <div id="station-info" style="font-size: 10px; font-weight: 800; color: var(--accent); text-align: center; margin-bottom: 10px;"></div>
         <div id="api-list"></div>
     </div>
 
@@ -73,7 +55,6 @@
         <h2 style="font-size: 16px; color: var(--accent); margin-top:0;">📊 Moyennes Nationales</h2>
         <table class="moyennes-table">
             <tr><td><b>Gazole</b></td><td style="text-align: right; font-weight: 800; color: #ef4444;">2,132 € ⬆</td></tr>
-            <tr><td><b>SP95 (E5)</b></td><td style="text-align: right; font-weight: 800;">1,983 € ⬆</td></tr>
             <tr><td><b>SP95-E10</b></td><td style="text-align: right; font-weight: 800;">1,964 € ⬆</td></tr>
             <tr><td><b>SP98</b></td><td style="text-align: right; font-weight: 800;">2,038 € ⬆</td></tr>
             <tr><td><b>E85</b></td><td style="text-align: right; font-weight: 800; color: #10b981;">0,808 € ⬇</td></tr>
@@ -84,8 +65,8 @@
         <h2 style="font-size: 18px; margin-bottom: 10px;">⚔️ Duel de Stations</h2>
         <input type="number" id="p1" step="0.001" placeholder="Prix Station A" class="duel-input">
         <input type="number" id="p2" step="0.001" placeholder="Prix Station B" class="duel-input">
-        <button onclick="duel()" class="btn-main" style="background:var(--secondary); color:#000;">CALCULER L'ÉCART</button>
-        <div id="resDuel" style="display:none; margin-top:15px; font-weight:800;">
+        <button onclick="duel()" class="btn-main" style="background:var(--secondary); color:#000;">COMPARER</button>
+        <div id="resDuel" style="display:none; margin-top:15px; font-weight:800; text-align:center;">
             Économie : <span id="valDuel" style="color:var(--secondary);">0</span> € sur 50L
         </div>
     </div>
@@ -101,58 +82,48 @@
         <div id="container-37a7d91a3f21fde8a322a7a48c93a877"></div>
     </div>
 
-    <div class="card" style="font-size: 11px; color: var(--text-muted); line-height: 1.6;">
-        <p style="text-align:center; font-weight:800; color:var(--text-main); margin-bottom: 10px;">MENTIONS LÉGALES & CONFIDENTIALITÉ</p>
-        <p><b>Données :</b> Flux officiel prix-carburants.gouv.fr. Prix indicatifs.</p>
-        <p><b>Privacy :</b> Pas de collecte. Publicités via Adsterra.</p>
-    </div>
-
     <footer style="padding: 30px; font-size: 11px; color: #64748b;">© 2026 Observatoire National - Elyes Mahri</footer>
 
     <script>
-        const SITE_URL = "https://cris-observatory.github.io/-cris-observatoire-carburant/";
+        const SITE_URL = window.location.href;
 
         function clock() {
-            const now = new Date();
-            document.getElementById('clock').innerText = "✅ " + now.toLocaleString('fr-FR');
+            document.getElementById('clock').innerText = "✅ " + new Date().toLocaleString('fr-FR');
         }
         setInterval(clock, 1000); clock();
 
         async function rechercher() {
             let saisie = document.getElementById('cpInput').value.trim();
-            if(!saisie || saisie.length < 2) return alert("Indique un département (ex: 76) !");
+            if(saisie.length < 2) return alert("Indique au moins 2 chiffres !");
             
-            const dept = saisie.substring(0, 2);
             const card = document.getElementById('api-card');
             const list = document.getElementById('api-list');
             const info = document.getElementById('station-info');
             
-            list.innerHTML = "<p style='text-align:center; font-size:12px;'>🛰️ Recherche sur le flux national...</p>";
-            info.innerText = "";
+            list.innerHTML = "<p style='text-align:center'>🛰️ Connexion au flux direct...</p>";
             card.style.display = "block";
 
-            // URL CORRIGEE : Utilisation de encodeURIComponent pour l'étoile
-            const query = `cp like "${dept}*"`;
-            const url = `https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-temps-reel/records?where=${encodeURIComponent(query)}&limit=100`;
+            // NOUVELLE METHODE DE RECHERCHE : Plus robuste sur le champ CP
+            const url = `https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-temps-reel/records?where=search(cp, "${saisie}")&limit=100`;
 
             try {
                 const response = await fetch(url);
                 const data = await response.json();
                 
                 if(!data.results || data.results.length === 0) {
-                    list.innerHTML = "<p style='text-align:center'>❌ Aucune station trouvée pour " + dept + ".</p>";
+                    list.innerHTML = "<p style='text-align:center'>❌ Aucune station trouvée. Vérifie le code.</p>";
                     return;
                 }
 
                 const stations = data.results.sort((a, b) => (a.gazole_prix || 9) - (b.gazole_prix || 9));
                 list.innerHTML = "";
-                info.innerText = `📍 ${stations.length} stations trouvées (${dept})`;
+                info.innerText = `📍 ${stations.length} STATIONS TROUVÉES`;
                 
                 stations.forEach(s => {
                     list.innerHTML += `
                         <div class="live-item">
                             <div style="text-align:left;">
-                                <b style="font-size:11px; text-transform: capitalize;">${s.adresse ? s.adresse.toLowerCase() : 'Inconnue'}</b><br>
+                                <b style="font-size:11px; text-transform: uppercase;">${s.adresse || 'Adresse inconnue'}</b><br>
                                 <small style="color:var(--accent); font-weight:bold;">${s.ville} (${s.cp})</small>
                             </div>
                             <div class="live-prices">
@@ -164,7 +135,7 @@
                         </div>`;
                 });
             } catch(e) { 
-                list.innerHTML = "<p style='text-align:center; color:#ef4444;'>⚠️ Flux temporairement indisponible.</p>"; 
+                list.innerHTML = "<p style='text-align:center'>⚠️ Erreur de réseau. Réessaye.</p>"; 
             }
         }
 
