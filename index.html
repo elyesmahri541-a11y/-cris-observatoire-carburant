@@ -11,7 +11,7 @@
     <div style="background:#003566; color:white; padding:15px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
         <h1 style="margin:0; font-size:18px;">⛽ ESSENCE ECO NORMANDIE</h1>
         <p style="background:#ffea00; color:#000; display:inline-block; padding:3px 10px; border-radius:5px; font-weight:bold; font-size:11px; margin-top:8px;">
-            ✅ Mis à jour le 21 Mars 2026 à 11h25
+            ✅ Mis à jour le 21 Mars 2026 à 11h35
         </p>
     </div>
 
@@ -20,11 +20,30 @@
         <table style="width:100%; border-collapse:collapse; font-size:13px; text-align:left;">
             <tr style="border-bottom:1px solid #eee;"><td style="padding:6px; font-weight:bold;">Gazole</td><td style="padding:6px; text-align:right; color:#d90429;">2,132 €/L <small>⬆</small></td></tr>
             <tr style="border-bottom:1px solid #eee;"><td style="padding:6px; font-weight:bold;">SP98 (E5)</td><td style="padding:6px; text-align:right;">2,038 €/L <small>⬆</small></td></tr>
-            <tr style="border-bottom:1px solid #eee;"><td style="padding:6px; font-weight:bold;">SP95 (E5)</td><td style="padding:6px; text-align:right;">1,983 €/L <small>⬆</small></td></tr>
-            <tr style="border-bottom:1px solid #eee;"><td style="padding:6px; font-weight:bold;">E10</td><td style="padding:6px; text-align:right;">1,964 €/L <small>⬆</small></td></tr>
-            <tr style="border-bottom:1px solid #eee;"><td style="padding:6px; font-weight:bold;">GPL-c</td><td style="padding:6px; text-align:right;">0,984 €/L <small>⬆</small></td></tr>
+            <tr style="border-bottom:1px solid #eee;"><td style="padding:6px; font-weight:bold;">SP95 (E10)</td><td style="padding:6px; text-align:right;">1,964 €/L <small>⬆</small></td></tr>
             <tr><td style="padding:6px; font-weight:bold;">E85</td><td style="padding:6px; text-align:right; color:#38b000;">0,808 €/L <small>⬇</small></td></tr>
         </table>
+    </div>
+
+    <div style="background:#003566; color:white; margin:15px; padding:15px; border-radius:12px; box-shadow: 0 4px 8px rgba(0,0,0,0.15);">
+        <h2 style="font-size:16px; margin-top:0;">🧮 Calcule ton économie !</h2>
+        <p style="font-size:12px; opacity:0.9;">Compare ton plein avec le prix moyen France.</p>
+        
+        <div style="margin-top:10px;">
+            <input type="number" id="litres" placeholder="Litres (ex: 50)" style="width:70%; padding:10px; border-radius:5px; border:none; margin-bottom:10px; text-align:center;">
+            <br>
+            <select id="typeCarburant" style="width:75%; padding:10px; border-radius:5px; border:none; margin-bottom:10px;">
+                <option value="0.165">Gazole (-16,5 cts/L)</option>
+                <option value="0.153">SP95-E10 (-15,3 cts/L)</option>
+                <option value="0.131">E85 (-13,1 cts/L)</option>
+            </select>
+            <br>
+            <button onclick="calculer()" style="background:#ffea00; color:#000; border:none; padding:12px 25px; border-radius:5px; font-weight:bold; cursor:pointer; width:75%;">CALCULER</button>
+        </div>
+        
+        <div id="resultat" style="margin-top:15px; font-size:18px; font-weight:bold; display:none;">
+            Tu gagnes <span id="montant" style="color:#ffea00;">0</span> € sur ce plein ! 🚀
+        </div>
     </div>
 
     <div style="background:#e3f2fd; border:1px solid #bbdefb; margin:15px; padding:15px; border-radius:12px; text-align:left;">
@@ -32,10 +51,7 @@
         <ul style="list-style:none; padding:0; font-size:12px; line-height:1.8;">
             <li>⛽ <b>Gazole :</b> 1,967€ <small style="color:#666;">(MàJ: 07/03)</small> <a href="https://www.google.com/maps/search/Auchan+Canteleu" target="_blank" style="color:#0d47a1; font-weight:bold; text-decoration:none;">📍 Auchan Canteleu</a></li>
             <li>⛽ <b>SP95-E10 :</b> 1,811€ <small style="color:#666;">(MàJ: 07/03)</small> <a href="https://www.google.com/maps/search/Auchan+Canteleu" target="_blank" style="color:#0d47a1; font-weight:bold; text-decoration:none;">📍 Auchan Canteleu</a></li>
-            <li>⛽ <b>GPL :</b> 0,879€ <small style="color:#e91e63; font-weight:bold;">(⚠️ MàJ: 08/01)</small> <a href="https://www.google.com/maps/search/Carrefour+Goderville" target="_blank" style="color:#0d47a1; font-weight:bold; text-decoration:none;">📍 Carr. Goderville</a></li>
-            <li>⛽ <b>SP98 :</b> 1,836€ <small style="color:#666;">(MàJ: 25/02)</small> <a href="https://www.google.com/maps/search/Esso+Gaillefontaine" target="_blank" style="color:#0d47a1; font-weight:bold; text-decoration:none;">📍 Esso Gaillef.</a></li>
-            <li>⛽ <b>SP95-E5 :</b> 1,869€ <small style="color:#666;">(MàJ: 17/03)</small> <a href="https://www.google.com/maps/search/Carrefour+Fécamp" target="_blank" style="color:#0d47a1; font-weight:bold; text-decoration:none;">📍 Carr. Fécamp</a></li>
-            <li>⛽ <b>E85 :</b> 0,677€ <small style="color:#38b000; font-weight:bold;">(⚡ MàJ: Aujourd'hui)</small> <a href="https://www.google.com/maps/search/Leclerc+Gonfreville" target="_blank" style="color:#0d47a1; font-weight:bold; text-decoration:none;">📍 Lecl. Gonfreville</a></li>
+            <li>⛽ <b>E85 :</b> 0,677€ <small style="color:#38b000; font-weight:bold;">(⚡ MàJ: 21/03)</small> <a href="https://www.google.com/maps/search/Leclerc+Gonfreville" target="_blank" style="color:#0d47a1; font-weight:bold; text-decoration:none;">📍 Lecl. Gonfreville</a></li>
         </ul>
         <a href="https://www.prix-carburants.gouv.fr/" target="_blank" style="display:block; text-align:center; background:#0d47a1; color:white; text-decoration:none; padding:8px; border-radius:5px; font-size:11px; font-weight:bold; margin-top:10px;">🔍 Vérifier en direct (Source: Gouv.fr)</a>
     </div>
@@ -45,10 +61,7 @@
         <ul style="list-style:none; padding:0; font-size:12px; line-height:1.8;">
             <li>⛽ <b>Gazole :</b> 1,986€ <small style="color:#666;">(MàJ: 12/03)</small> <a href="https://www.google.com/maps/search/Carrefour+Charleval" target="_blank" style="color:#33691e; font-weight:bold; text-decoration:none;">📍 Carr. Charleval</a></li>
             <li>⛽ <b>SP95-E10 :</b> 1,819€ <small style="color:#666;">(MàJ: 12/03)</small> <a href="https://www.google.com/maps/search/Carrefour+Charleval" target="_blank" style="color:#33691e; font-weight:bold; text-decoration:none;">📍 Carr. Charleval</a></li>
-            <li>⛽ <b>GPL :</b> 0,849€ <small style="color:#666;">(MàJ: 24/02)</small> <a href="https://www.google.com/maps/search/Intermarché+Verneuil" target="_blank" style="color:#33691e; font-weight:bold; text-decoration:none;">📍 Inter. Verneuil</a></li>
-            <li>⛽ <b>SP98 :</b> 1,890€ <small style="color:#666;">(MàJ: 16/03)</small> <a href="https://www.google.com/maps/search/Carrefour+Thiberville" target="_blank" style="color:#33691e; font-weight:bold; text-decoration:none;">📍 Carr. Thiberville</a></li>
-            <li>⛽ <b>SP95-E5 :</b> 1,915€ <small style="color:#38b000; font-weight:bold;">(⚡ MàJ: Aujourd'hui)</small> <a href="https://www.google.com/maps/search/Intermarché+Évreux" target="_blank" style="color:#33691e; font-weight:bold; text-decoration:none;">📍 Carr. Pacy</a></li>
-            <li>⛽ <b>E85 :</b> 0,691€ <small style="color:#38b000; font-weight:bold;">(⚡ MàJ: Aujourd'hui)</small> <a href="https://www.google.com/maps/search/Leclerc+Menneval" target="_blank" style="color:#33691e; font-weight:bold; text-decoration:none;">📍 Lecl. Menneval</a></li>
+            <li>⛽ <b>E85 :</b> 0,691€ <small style="color:#38b000; font-weight:bold;">(⚡ MàJ: 21/03)</small> <a href="https://www.google.com/maps/search/Leclerc+Menneval" target="_blank" style="color:#33691e; font-weight:bold; text-decoration:none;">📍 Lecl. Menneval</a></li>
         </ul>
         <a href="https://www.prix-carburants.gouv.fr/" target="_blank" style="display:block; text-align:center; background:#33691e; color:white; text-decoration:none; padding:8px; border-radius:5px; font-size:11px; font-weight:bold; margin-top:10px;">🔍 Vérifier en direct (Source: Gouv.fr)</a>
     </div>
@@ -59,7 +72,7 @@
         <button onclick="navigator.clipboard.writeText('https://elyesmahri541-a11y.github.io/-cris-observatoire-carburant/'); alert('Lien copié !');" style="background:#444; color:white; padding:12px; border:none; border-radius:8px; font-size:12px; font-weight:bold; cursor:pointer; grid-column: span 2;">🔗 Copier le lien du site</button>
     </div>
 
-    <div style="margin:20px auto; width:95%; max-width:400px; background:#fff; padding:10px; border-radius:10px;">
+    <div style="margin:20px auto; width:95%; max-width:400px;">
         <script async="async" data-cfasync="false" src="https://pl28952288.profitablecpmratenetwork.com/37a7d91a3f21fde8a322a7a48c93a877/invoke.js"></script>
         <div id="container-37a7d91a3f21fde8a322a7a48c93a877"></div>
     </div>
@@ -67,10 +80,24 @@
     <div style="margin:20px 15px; padding:15px; font-size:10px; color:#777; text-align:left; border-top:1px solid #eee; line-height:1.5; background:#fff; border-radius:10px;">
         <p style="text-align:center; font-weight:bold; margin-bottom:10px; text-transform:uppercase;">Conditions & Confidentialité</p>
         <p><b>CGU :</b> Site <i>https://elyesmahri541-a11y.github.io/-cris-observatoire-carburant/</i> indicatif (Sources: Prix-Carburant.eu / Gouv.fr). L'éditeur ne peut être tenu responsable des erreurs de prix.</p>
-        <p><b>RGPD (Art. 15/21) :</b> Pas de données personnelles collectées. Cookies via Adsterra. Opposition possible via navigateur. Hébergement : GitHub Inc., San Francisco, USA.</p>
+        <p><b>RGPD (Art. 15/21) :</b> Pas de données personnelles collectées. Cookies via Adsterra. Opposition possible via navigateur.</p>
     </div>
 
     <footer style="padding:20px; font-size:10px; color:#999;">© 2026 Observatoire Normand - Elyes Mahri</footer>
+
+    <script>
+        function calculer() {
+            var litres = document.getElementById('litres').value;
+            var ecoParLitre = document.getElementById('typeCarburant').value;
+            if(litres > 0) {
+                var total = (litres * ecoParLitre).toFixed(2);
+                document.getElementById('montant').innerText = total;
+                document.getElementById('resultat').style.display = 'block';
+            } else {
+                alert("Entre un nombre de litres valide !");
+            }
+        }
+    </script>
 
 </body>
 </html>
