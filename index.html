@@ -3,72 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Essence Eco | Observatoire National Live</title>
+    <title>Essence Eco | Observatoire Live 76</title>
     <script src="https://pl28952276.profitablecpmratenetwork.com/68/19/1f/68191f7887eac7841580d0ccead48e50.js"></script>
     <style>
         :root {
             --bg-body: #f8fafc; --bg-card: #ffffff; --text-main: #1e293b;
-            --text-muted: #64748b; --primary: #0f172a; --accent: #3b82f6;
-            --secondary: #fbbf24; --border: #e2e8f0; --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --primary: #0f172a; --accent: #3b82f6; --secondary: #fbbf24;
+            --border: #e2e8f0; --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
-        @media (prefers-color-scheme: dark) {
-            :root { --bg-body: #0f172a; --bg-card: #1e293b; --text-main: #f1f5f9; --border: rgba(255, 255, 255, 0.05); }
-        }
-        body { text-align: center; font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 0; line-height: 1.5; }
+        body { text-align: center; font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 0; }
         .header { background: var(--primary); padding: 35px 20px 50px; border-bottom-left-radius: 32px; border-bottom-right-radius: 32px; box-shadow: var(--shadow); }
         .header h1 { margin: 0; font-size: 20px; font-weight: 800; color: white; }
         .date-badge { background: var(--secondary); color: #000; display: inline-block; padding: 6px 14px; border-radius: 50px; font-weight: 700; font-size: 11px; margin-top: 12px; }
-        .search-area { margin: -25px auto 20px; width: 90%; max-width: 500px; display: flex; gap: 8px; position: relative; z-index: 10; }
-        .search-input { flex: 1; padding: 15px; border-radius: 18px; border: 1px solid var(--border); box-shadow: var(--shadow); background: var(--bg-card); color: var(--text-main); outline: none; }
-        .search-btn { background: var(--accent); color: white; border: none; padding: 0 20px; border-radius: 18px; font-weight: 800; cursor: pointer; }
-        .card { background-color: var(--bg-card); margin: 20px auto; padding: 24px; border-radius: 28px; box-shadow: var(--shadow); max-width: 500px; width: 88%; text-align: left; border: 1px solid var(--border); }
+        
+        /* LA FENÊTRE LIVE IMPOSSIBLE À BLOQUER */
+        .live-container { margin: -25px auto 20px; width: 92%; max-width: 500px; height: 450px; background: white; border-radius: 24px; box-shadow: var(--shadow); overflow: hidden; border: 1px solid var(--border); }
+        iframe { width: 100%; height: 100%; border: none; }
+
+        .card { background-color: var(--bg-card); margin: 20px auto; padding: 20px; border-radius: 24px; box-shadow: var(--shadow); max-width: 500px; width: 88%; text-align: left; border: 1px solid var(--border); }
         .moyennes-table { width: 100%; border-collapse: collapse; }
-        .moyennes-table td { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
-        .btn-main { display: block; width: 100%; padding: 15px; background: var(--accent); color: white; border-radius: 18px; font-size: 13px; font-weight: 700; text-align: center; margin-top: 15px; border:none; cursor:pointer; text-decoration: none; }
+        .moyennes-table td { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
         .duel-card { background: linear-gradient(135deg, #d90429 0%, #800000 100%); color: white; }
-        .duel-input { width: 92%; padding: 14px; margin: 8px 0; border-radius: 14px; border: none; background: rgba(255,255,255,0.15); color: white; outline: none; }
-        .social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 500px; margin: 20px auto; width: 90%; }
-        .btn-social { padding: 14px; border-radius: 16px; font-size: 12px; font-weight: 700; color: white; text-align: center; border: none; cursor: pointer; }
-        .live-item { padding: 15px 0; border-bottom: 1px dashed var(--border); }
-        .live-prices { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 8px; }
-        .price-chip { font-size: 11px; background: rgba(59, 130, 246, 0.08); padding: 5px; border-radius: 8px; }
+        .duel-input { width: 90%; padding: 12px; margin: 5px 0; border-radius: 12px; border: none; background: rgba(255,255,255,0.2); color: white; outline: none; }
+        .btn-duel { display: block; width: 100%; padding: 12px; background: var(--secondary); color: black; border-radius: 12px; font-weight: 800; border: none; cursor: pointer; margin-top: 10px; }
+        .social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 500px; margin: 20px auto; width: 90%; }
+        .btn-social { padding: 12px; border-radius: 12px; font-size: 11px; font-weight: 700; color: white; border: none; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <header class="header">
-        <h1>⛽ ESSENCE ECO | LIVE</h1>
-        <div class="date-badge" id="clock">Chargement...</div>
+        <h1>⛽ ESSENCE ECO | SEINE-MARITIME</h1>
+        <div class="date-badge" id="clock">...</div>
     </header>
 
-    <div class="search-area">
-        <input type="text" id="cpInput" class="search-input" placeholder="Dept (ex: 76)">
-        <button onclick="rechercher()" class="search-btn">GO</button>
-    </div>
-
-    <div id="api-card" class="card" style="display:none; border-top: 6px solid var(--accent);">
-        <div id="station-info" style="font-size: 10px; font-weight: 800; color: var(--accent); text-align: center; margin-bottom: 10px;"></div>
-        <div id="api-list"></div>
+    <div class="live-container">
+        <iframe src="https://www.prix-carburants.gouv.fr/recherche/?departement=76"></iframe>
     </div>
 
     <div class="card">
         <h2 style="font-size: 16px; color: var(--accent); margin-top:0;">📊 Moyennes Nationales</h2>
         <table class="moyennes-table">
-            <tr><td><b>Gazole</b></td><td style="text-align: right; font-weight: 800;">1,812 €</td></tr>
-            <tr><td><b>SP95 (E5)</b></td><td style="text-align: right; font-weight: 800;">1,883 €</td></tr>
-            <tr><td><b>SP95-E10</b></td><td style="text-align: right; font-weight: 800;">1,864 €</td></tr>
-            <tr><td><b>SP98</b></td><td style="text-align: right; font-weight: 800;">1,938 €</td></tr>
-            <tr><td><b>E85</b></td><td style="text-align: right; font-weight: 800; color: #10b981;">0,808 €</td></tr>
+            <tr><td><b>Gazole</b></td><td style="text-align: right; font-weight: 800;">1,71 €</td></tr>
+            <tr><td><b>SP95 (E5)</b></td><td style="text-align: right; font-weight: 800;">1,78 €</td></tr>
+            <tr><td><b>SP95-E10</b></td><td style="text-align: right; font-weight: 800;">1,76 €</td></tr>
+            <tr><td><b>SP98</b></td><td style="text-align: right; font-weight: 800;">1,83 €</td></tr>
+            <tr><td><b>E85</b></td><td style="text-align: right; font-weight: 800; color: #10b981;">0,80 €</td></tr>
         </table>
     </div>
 
+    <div style="margin:20px auto; width:90%; max-width:400px;">
+        <script async="async" data-cfasync="false" src="https://pl28952288.profitablecpmratenetwork.com/37a7d91a3f21fde8a322a7a48c93a877/invoke.js"></script>
+        <div id="container-37a7d91a3f21fde8a322a7a48c93a877"></div>
+    </div>
+
     <div class="card duel-card">
-        <h2 style="font-size: 18px; margin-bottom: 10px;">⚔️ Duel de Stations</h2>
+        <h3>⚔️ Comparateur 50L</h3>
         <input type="number" id="p1" step="0.001" placeholder="Prix Station A" class="duel-input">
         <input type="number" id="p2" step="0.001" placeholder="Prix Station B" class="duel-input">
-        <button onclick="duel()" class="btn-main" style="background:var(--secondary); color:#000;">COMPARER</button>
-        <div id="resDuel" style="display:none; margin-top:15px; font-weight:800; text-align:center;">
-            Économie : <span id="valDuel" style="color:var(--secondary);">0</span> € sur 50L
+        <button onclick="duel()" class="btn-duel">CALCULER L'ÉCONOMIE</button>
+        <div id="resDuel" style="display:none; margin-top:10px; font-weight:800; text-align:center;">
+            Gain : <span id="valDuel" style="font-size: 20px;">0</span> €
         </div>
     </div>
 
@@ -78,91 +73,23 @@
         <button onclick="shareFB()" style="background:#1877F2;" class="btn-social">Facebook</button>
     </div>
 
-    <div style="margin:20px auto; width:90%; max-width:400px;">
-        <script async="async" data-cfasync="false" src="https://pl28952288.profitablecpmratenetwork.com/37a7d91a3f21fde8a322a7a48c93a877/invoke.js"></script>
-        <div id="container-37a7d91a3f21fde8a322a7a48c93a877"></div>
-    </div>
-
-    <div class="card" style="font-size: 11px; color: var(--text-muted); line-height: 1.6;">
-        <p style="text-align:center; font-weight:800; color:var(--text-main); margin-bottom: 10px;">MENTIONS LÉGALES & CONFIDENTIALITÉ</p>
-        <p><b>Informations :</b> Observatoire utilisant les flux officiels. Prix indicatifs.</p>
-        <p><b>Confidentialité :</b> Aucune donnée personnelle collectée. Pub par Adsterra.</p>
-    </div>
-
-    <footer style="padding: 30px; font-size: 11px; color: #64748b;">© 2026 Observatoire National - Elyes Mahri</footer>
+    <footer style="padding: 20px; font-size: 10px; color: #64748b;">© 2026 Observatoire National - Elyes Mahri</footer>
 
     <script>
-        const SITE_URL = window.location.href;
-
-        function clock() {
-            document.getElementById('clock').innerText = "✅ " + new Date().toLocaleString('fr-FR');
-        }
+        function clock() { document.getElementById('clock').innerText = "✅ " + new Date().toLocaleString('fr-FR'); }
         setInterval(clock, 1000); clock();
-
-        async function rechercher() {
-            let val = document.getElementById('cpInput').value.trim();
-            if(val.length < 2) return alert("Indique un département (ex: 76)");
-            
-            const dept = val.substring(0, 2);
-            const card = document.getElementById('api-card');
-            const list = document.getElementById('api-list');
-            const info = document.getElementById('station-info');
-            
-            list.innerHTML = "<p style='text-align:center'>⚡ Scan du flux national (76)...</p>";
-            card.style.display = "block";
-
-            // MÉTHODE INFAILLIBLE : On demande les 100 dernières stations mises à jour sans filtrer par département côté serveur
-            const url = `https://data.economie.gouv.fr/api/records/1.0/search/?dataset=prix-des-carburants-en-france-flux-temps-reel&rows=100&sort=maj_par_station`;
-
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                
-                // Filtrage manuel par ton code
-                const stations = data.records.filter(r => r.fields.cp && r.fields.cp.startsWith(dept));
-                
-                if(stations.length === 0) {
-                    list.innerHTML = `<p style='text-align:center'>❌ Aucune donnée instantanée pour le ${dept}. Réessayez.</p>`;
-                    return;
-                }
-
-                list.innerHTML = "";
-                info.innerText = `📍 ${stations.length} STATIONS DANS LE ${dept}`;
-                
-                stations.forEach(r => {
-                    const s = r.fields;
-                    list.innerHTML += `
-                        <div class="live-item">
-                            <div style="text-align:left;">
-                                <b style="font-size:11px; text-transform: uppercase;">${s.adresse || 'STATION'}</b><br>
-                                <small style="color:var(--accent); font-weight:bold;">${s.ville} (${s.cp})</small>
-                            </div>
-                            <div class="live-prices">
-                                <span class="price-chip">Gazole: <b>${s.gazole_prix || '--'}€</b></span>
-                                <span class="price-chip">E10: <b>${s.sp95_prix || '--'}€</b></span>
-                                <span class="price-chip">SP98: <b>${s.sp98_prix || '--'}€</b></span>
-                                <span class="price-chip">E85: <b>${s.e85_prix || '--'}€</b></span>
-                            </div>
-                        </div>`;
-                });
-            } catch(e) { 
-                list.innerHTML = "<p style='text-align:center'>⚠️ Serveur saturé. Attendez 5 secondes et cliquez sur GO.</p>"; 
-            }
-        }
 
         function duel() {
             var p1 = document.getElementById('p1').value;
             var p2 = document.getElementById('p2').value;
-            if(p1 > 0 && p2 > 0) {
-                var res = (Math.abs(p1 - p2) * 50).toFixed(2);
-                document.getElementById('valDuel').innerText = res;
+            if(p1 && p2) {
+                document.getElementById('valDuel').innerText = (Math.abs(p1 - p2) * 50).toFixed(2);
                 document.getElementById('resDuel').style.display = 'block';
             }
         }
-
-        function copyLink() { navigator.clipboard.writeText(SITE_URL); alert('Lien copié !'); }
-        function shareWA() { window.open("https://api.whatsapp.com/send?text=Prix essence en direct : " + SITE_URL); }
-        function shareFB() { window.open("https://www.facebook.com/sharer/sharer.php?u=" + SITE_URL); }
+        function copyLink() { navigator.clipboard.writeText(window.location.href); alert('Lien copié !'); }
+        function shareWA() { window.open("https://api.whatsapp.com/send?text=Prix essence : " + window.location.href); }
+        function shareFB() { window.open("https://www.facebook.com/sharer/sharer.php?u=" + window.location.href); }
     </script>
 </body>
 </html>
