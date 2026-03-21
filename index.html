@@ -39,16 +39,15 @@
             margin: 0; padding: 0; line-height: 1.5;
         }
 
-        /* HEADER */
         .header {
             background: var(--primary);
-            padding: 30px 20px;
+            padding: 35px 20px;
             border-bottom-left-radius: 32px;
             border-bottom-right-radius: 32px;
             box-shadow: var(--shadow);
         }
 
-        .header h1 { margin: 0; font-size: 20px; letter-spacing: -0.5px; font-weight: 800; color: white; }
+        .header h1 { margin: 0; font-size: 20px; font-weight: 800; color: white; letter-spacing: -0.5px; }
         
         .date-badge {
             background: var(--secondary);
@@ -61,7 +60,6 @@
             margin-top: 12px;
         }
 
-        /* CARDS XL */
         .card { 
             background-color: var(--bg-card); 
             margin: 20px auto; 
@@ -74,9 +72,9 @@
             border: 1px solid var(--border);
         }
 
-        h2, h3 { font-weight: 800; letter-spacing: -0.025em; margin-bottom: 15px; }
+        h2, h3 { font-weight: 800; margin-bottom: 15px; }
 
-        .moyennes-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+        .moyennes-table { width: 100%; border-collapse: collapse; }
         .moyennes-table td { padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
 
         .top-list { list-style: none; padding: 0; margin: 0; }
@@ -130,13 +128,15 @@
             width: 90%;
         }
         .btn-social {
-            padding: 12px;
-            border-radius: 14px;
+            padding: 14px;
+            border-radius: 16px;
             text-decoration: none;
             font-size: 12px;
             font-weight: 700;
             color: white;
             text-align: center;
+            border: none;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -144,7 +144,7 @@
 
     <header class="header">
         <h1>⛽ ESSENCE ECO NORMANDIE</h1>
-        <div class="date-badge">✅ Mis à jour le 21 Mars 2026 à 12h05</div>
+        <div class="date-badge">✅ Mis à jour le 21 Mars 2026 à 15h20</div>
     </header>
 
     <div class="card">
@@ -156,7 +156,7 @@
             <tr><td><b>SP98 (E5)</b></td><td style="text-align: right; font-weight: 800;">2,038 € ⬆</td></tr>
             <tr><td><b>E85</b></td><td style="text-align: right; font-weight: 800; color: #10b981;">0,808 € ⬇</td></tr>
         </table>
-        <a href="https://www.prix-carburants.gouv.fr/" target="_blank" class="btn-main">🔍 CHERCHER PARTOUT EN FRANCE</a>
+        <a href="https://www.prix-carburants.gouv.fr/" target="_blank" class="btn-main">🔍 RECHERCHE NATIONALE</a>
     </div>
 
     <div class="card duel-card">
@@ -178,7 +178,6 @@
             <li><span class="badge b-old">25/02</span> <b>SP98 :</b> 1,836€ <a href="#" class="btn-maps">📍 Gaillef.</a></li>
             <li><span class="badge b-fresh">21/03</span> <b>E85 :</b> 0,677€ <a href="#" class="btn-maps">📍 Gonfreville</a></li>
         </ul>
-        <a href="https://www.prix-carburants.gouv.fr/" target="_blank" class="btn-main" style="background:#3b82f6;">RECHERCHER DANS LE 76</a>
     </div>
 
     <div class="card" style="border-top: 6px solid #10b981;">
@@ -190,13 +189,12 @@
             <li><span class="badge b-ok">16/03</span> <b>SP98 :</b> 1,890€ <a href="#" class="btn-maps">📍 Thiberville</a></li>
             <li><span class="badge b-fresh">21/03</span> <b>E85 :</b> 0,691€ <a href="#" class="btn-maps">📍 Menneval</a></li>
         </ul>
-        <a href="https://www.prix-carburants.gouv.fr/" target="_blank" class="btn-main" style="background:#10b981;">RECHERCHER DANS LE 27</a>
     </div>
 
     <div class="social-grid">
-        <button onclick="navigator.clipboard.writeText(window.location.href); alert('Lien copié !');" style="grid-column: span 2; background:#334155; border:none; cursor:pointer;" class="btn-social">🔗 Copier le lien du site</button>
-        <a href="https://api.whatsapp.com/send?text=Economise%20sur%20ton%20plein%20ici%20:%20" style="background:#25D366;" class="btn-social">WhatsApp</a>
-        <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" style="background:#1877F2;" class="btn-social">Facebook</a>
+        <button onclick="copyLink()" style="grid-column: span 2; background:#334155;" class="btn-social">🔗 Copier le lien du site</button>
+        <button onclick="shareWA()" style="background:#25D366;" class="btn-social">WhatsApp</button>
+        <button onclick="shareFB()" style="background:#1877F2;" class="btn-social">Facebook</button>
     </div>
 
     <div style="margin:30px auto; width:90%; max-width:400px; background:var(--bg-card); padding:15px; border-radius:24px; border: 1px solid var(--border);">
@@ -206,13 +204,15 @@
 
     <div class="card" style="font-size: 11px; color: var(--text-muted); line-height: 1.6;">
         <p style="text-align:center; font-weight:800; color:var(--text-main); margin-bottom: 10px;">MENTIONS LÉGALES</p>
-        <p><b>CGU :</b> Observatoire bénévole. Prix indicatifs. Sources : Prix-Carburant.eu / Gouv.fr.</p>
-        <p><b>RGPD :</b> Pas de collecte de données directes. Cookies publicitaires via Adsterra.</p>
+        <p><b>Observatoire :</b> Données indicatives. Sources : Prix-Carburant.eu / Gouv.fr.</p>
+        <p><b>RGPD :</b> Pas de collecte de données. Cookies publicitaires (Adsterra) actifs.</p>
     </div>
 
     <footer style="padding: 30px; font-size: 11px; color: #64748b;">© 2026 Observatoire Normand - Elyes Mahri</footer>
 
     <script>
+        const SITE_URL = "https://cris-observatory.github.io/-cris-observatoire-carburant/";
+
         function duel() {
             var p1 = document.getElementById('p1').value;
             var p2 = document.getElementById('p2').value;
@@ -222,6 +222,20 @@
                 document.getElementById('resDuel').style.display = 'block';
             }
         }
+
+        function copyLink() {
+            navigator.clipboard.writeText(SITE_URL);
+            alert('Lien copié !');
+        }
+
+        function shareWA() {
+            window.open("https://api.whatsapp.com/send?text=Économise sur ton plein en Normandie ici : " + SITE_URL);
+        }
+
+        function shareFB() {
+            window.open("https://www.facebook.com/sharer/sharer.php?u=" + SITE_URL);
+        }
     </script>
 </body>
-</html>
+    </html>
+    
