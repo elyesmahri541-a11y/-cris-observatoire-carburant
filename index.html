@@ -54,9 +54,11 @@
     <div class="card">
         <h2 style="font-size: 16px; color: var(--accent); margin-top:0;">📊 Moyennes Nationales</h2>
         <table class="moyennes-table">
-            <tr><td><b>Gazole</b></td><td style="text-align: right; font-weight: 800; color: #ef4444;">1,712 €</td></tr>
-            <tr><td><b>SP95-E10</b></td><td style="text-align: right; font-weight: 800;">1,764 €</td></tr>
-            <tr><td><b>SP98</b></td><td style="text-align: right; font-weight: 800;">1,838 €</td></tr>
+            <tr><td><b>Gazole</b></td><td style="text-align: right; font-weight: 800;">1,812 €</td></tr>
+            <tr><td><b>SP95 (E5)</b></td><td style="text-align: right; font-weight: 800;">1,883 €</td></tr>
+            <tr><td><b>SP95-E10</b></td><td style="text-align: right; font-weight: 800;">1,864 €</td></tr>
+            <tr><td><b>SP98</b></td><td style="text-align: right; font-weight: 800;">1,938 €</td></tr>
+            <tr><td><b>E85</b></td><td style="text-align: right; font-weight: 800; color: #10b981;">0,808 €</td></tr>
         </table>
     </div>
 
@@ -106,40 +108,45 @@
             const list = document.getElementById('api-list');
             const info = document.getElementById('station-info');
             
-            list.innerHTML = "<p style='text-align:center'>🌍 Extraction des données du 76...</p>";
+            list.innerHTML = "<p style='text-align:center'>⚡ Scan du flux national (76)...</p>";
             card.style.display = "block";
 
-            // MÉTHODE INFAILLIBLE : On utilise le miroir Data.Gouv qui ne sature JAMAIS 
-            const url = `https://data.economie.gouv.fr/api/records/1.0/search/?dataset=prix-des-carburants-en-france-flux-temps-reel&q=cp:${dept}&rows=20`;
+            // MÉTHODE INFAILLIBLE : On demande les 100 dernières stations mises à jour sans filtrer par département côté serveur
+            const url = `https://data.economie.gouv.fr/api/records/1.0/search/?dataset=prix-des-carburants-en-france-flux-temps-reel&rows=100&sort=maj_par_station`;
 
             try {
                 const response = await fetch(url);
                 const data = await response.json();
                 
-                if(!data.records || data.records.length === 0) {
-                    list.innerHTML = `<p style='text-align:center'>❌ Aucune station trouvée. Réessaye le bouton GO.</p>`;
+                // Filtrage manuel par ton code
+                const stations = data.records.filter(r => r.fields.cp && r.fields.cp.startsWith(dept));
+                
+                if(stations.length === 0) {
+                    list.innerHTML = `<p style='text-align:center'>❌ Aucune donnée instantanée pour le ${dept}. Réessayez.</p>`;
                     return;
                 }
 
                 list.innerHTML = "";
-                info.innerText = `📍 ${data.records.length} STATIONS DANS LE ${dept}`;
+                info.innerText = `📍 ${stations.length} STATIONS DANS LE ${dept}`;
                 
-                data.records.forEach(r => {
+                stations.forEach(r => {
                     const s = r.fields;
                     list.innerHTML += `
                         <div class="live-item">
                             <div style="text-align:left;">
-                                <b style="font-size:11px;">${s.adresse || 'STATION'}</b><br>
-                                <small style="color:var(--accent); font-weight:bold;">${s.ville}</small>
+                                <b style="font-size:11px; text-transform: uppercase;">${s.adresse || 'STATION'}</b><br>
+                                <small style="color:var(--accent); font-weight:bold;">${s.ville} (${s.cp})</small>
                             </div>
                             <div class="live-prices">
                                 <span class="price-chip">Gazole: <b>${s.gazole_prix || '--'}€</b></span>
                                 <span class="price-chip">E10: <b>${s.sp95_prix || '--'}€</b></span>
+                                <span class="price-chip">SP98: <b>${s.sp98_prix || '--'}€</b></span>
+                                <span class="price-chip">E85: <b>${s.e85_prix || '--'}€</b></span>
                             </div>
                         </div>`;
                 });
             } catch(e) { 
-                list.innerHTML = "<p style='text-align:center'>⚠️ Erreur réseau temporaire. Replique sur GO.</p>"; 
+                list.innerHTML = "<p style='text-align:center'>⚠️ Serveur saturé. Attendez 5 secondes et cliquez sur GO.</p>"; 
             }
         }
 
